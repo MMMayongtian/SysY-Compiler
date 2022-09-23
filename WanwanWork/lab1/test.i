@@ -732,7 +732,7 @@ int main() {
  b = 1;
  i = 1;
 
- scanf_s("%d", &n);
+ scanf("%d", &n);
  printf("%d\n", a);
  printf("%d\n", b);
 
