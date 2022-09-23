@@ -5,6 +5,7 @@ pre:
     
 lexer:
 	clang -E -Xclang -dump-tokens main.cpp
+
 # 生成`main.c.t.original`
 ast-gcc:
 	gcc -fdump-tree-original-raw main.cpp
@@ -33,7 +34,7 @@ obj:
 	gcc -O0 -c -o main.o main.S
     
 antiobj:
-	objdump -dump main.o > main-anti-obj.S
+	objdump -d main.o > main-anti-obj.S
 	nm main.o > main-nm-obj.txt
 
 exe:
