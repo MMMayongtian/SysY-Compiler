@@ -725,11 +725,16 @@ extern int __overflow (FILE *, int);
 # 2 "main.c" 2
  
 # 2 "main.c"
-int main(){
- int a,b;
-
- scanf("%d%d",&a,&b);
-
- printf("Hello World %d\n",a+b);
- return 0;
+int main()
+ {
+ int i, n, f;
+ scanf("%d", &n);
+ i = 2;
+ f = 1;
+ while (i <= n)
+ {
+ f = f * i;
+ i = i + 1;
+ }
+printf("%d\n", f);
  }
