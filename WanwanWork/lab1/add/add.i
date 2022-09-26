@@ -1,10 +1,10 @@
-# 1 "test.c"
+# 1 "add.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 31 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 32 "<command-line>" 2
-# 1 "test.c"
+# 1 "add.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -722,27 +722,10 @@ extern int __uflow (FILE *);
 extern int __overflow (FILE *, int);
 # 873 "/usr/include/stdio.h" 3 4
 
-# 2 "test.c" 2
+# 2 "add.c" 2
 
-# 2 "test.c"
-int main() {
- int a, b, i, t, n;
-
- a = 0;
- b = 1;
- i = 1;
-
- scanf("%d", &n);
- printf("%d\n", a);
- printf("%d\n", b);
-
- while (i < n)
- {
-  t = b;
-  b = a + b;
-  printf("%d\n", b);
-  a = t;
-  i = i + 1;
- }
-
+# 2 "add.c"
+int main(){
+int a=3;
+int c=a*a;
 }
