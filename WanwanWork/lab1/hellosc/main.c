@@ -7,7 +7,9 @@ int mul(int a,int b){
 int main(){
 
     int a=getint();
+    int d=getint();
     int b=3;
     int c=mul(a,b);
     putint(10);
+
 }

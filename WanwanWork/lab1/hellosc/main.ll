@@ -23,14 +23,17 @@ define dso_local i32 @main() #0 {
   %1 = alloca i32, align 4
   %2 = alloca i32, align 4
   %3 = alloca i32, align 4
-  %4 = call i32 (...) @getint()
-  store i32 %4, i32* %1, align 4
-  store i32 3, i32* %2, align 4
-  %5 = load i32, i32* %1, align 4
-  %6 = load i32, i32* %2, align 4
-  %7 = call i32 @mul(i32 %5, i32 %6)
-  store i32 %7, i32* %3, align 4
-  %8 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 10)
+  %4 = alloca i32, align 4
+  %5 = call i32 (...) @getint()
+  store i32 %5, i32* %1, align 4
+  %6 = call i32 (...) @getint()
+  store i32 %6, i32* %2, align 4
+  store i32 3, i32* %3, align 4
+  %7 = load i32, i32* %1, align 4
+  %8 = load i32, i32* %3, align 4
+  %9 = call i32 @mul(i32 %7, i32 %8)
+  store i32 %9, i32* %4, align 4
+  %10 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 10)
   ret i32 0
 }
 

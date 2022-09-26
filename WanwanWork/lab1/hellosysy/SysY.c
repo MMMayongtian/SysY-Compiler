@@ -13,7 +13,7 @@ int main(){
 	putf("Enter in an integer greater than 100 ");
 	n = getint();
 	while(n<=100){
-		putf("Error input!")
+		putf("Error input!");
 		n = getint();
 	}
 	
@@ -37,8 +37,8 @@ int main(){
 	
 	
 	int array[1000];
-	int len = getarray(array[]);
-	for(int i=0;i<l;i++){
+	int len = getarray(array[0]);
+	for(int i=0;i<len;i++){
 		array[i] = array[i] * n;
 		array[i] = array[i] / 5;
 		array[i] = array[i] + n;
@@ -52,10 +52,10 @@ int main(){
 		}
 	}
 	
-	//putarray(len, a[]);
-	float af[100];
-	int lenf = getfarray(af);
-	putfarray(lenf, af);
+	// putarray(len, a[]);
+	// float af[100];
+	// int lenf = getfarray(af);
+	// putfarray(lenf, af);
 		
 	//stoptime();
 	
