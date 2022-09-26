@@ -7,7 +7,7 @@ int mul(int a,int b){
 
 int main(){
 	
-	void starttime();
+	//void starttime();
 	
 	int n;
 	putf("Enter in an integer greater than 100 ");
@@ -52,12 +52,12 @@ int main(){
 		}
 	}
 	
-	putarray(len, a[]);
+	//putarray(len, a[]);
 	float af[100];
 	int lenf = getfarray(af);
 	putfarray(lenf, af);
 		
-	stoptime();
+	//stoptime();
 	
 	return 0;
 }
