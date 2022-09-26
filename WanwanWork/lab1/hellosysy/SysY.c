@@ -7,6 +7,7 @@ int mul(int a,int b){
 
 int main(){
 	
+	//计时函数删掉是因为后续.ll转可执行文件出错 不知道为啥
 	//void starttime();
 	
 	int n;
@@ -37,6 +38,7 @@ int main(){
 	
 	
 	int array[1000];
+	//这里把原来的array[]改成array[0] 看文档改的 应该没问题
 	int len = getarray(array[0]);
 	for(int i=0;i<len;i++){
 		array[i] = array[i] * n;
@@ -51,7 +53,8 @@ int main(){
 			break;
 		}
 	}
-	
+	//这里报了好多错 我直接注释了 可以回头再看
+
 	// putarray(len, a[]);
 	// float af[100];
 	// int lenf = getfarray(af);
