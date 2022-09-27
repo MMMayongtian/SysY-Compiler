@@ -12,6 +12,7 @@ int main(){
 	int n;
 	putf("Enter in an integer greater than 100 ");
 	n = getint();
+	
 	while(n<=10){
 		putf("Error input!");
 		n = getint();
