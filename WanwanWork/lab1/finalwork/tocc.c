@@ -8,6 +8,7 @@ int mul(int a,int b){
 
 int main(){
 	
+    
 	int n;
 	
 	//scanf("%d", &n);
@@ -36,7 +37,7 @@ int main(){
     n = n % 10;
 
     int array[5];
-    int len = 5;
+    int len = getarray(array);
 
     for(int i=0;i<len;i++){
 

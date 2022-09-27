@@ -39,7 +39,7 @@ int main(){
 	
 	int array[1000];
 	//这里把原来的array[]改成array[0] 看文档改的 应该没问题
-	int len = getarray(array[0]);
+	int len = getarray(array);
 	for(int i=0;i<len;i++){
 		array[i] = array[i] * n;
 		array[i] = array[i] / 5;
