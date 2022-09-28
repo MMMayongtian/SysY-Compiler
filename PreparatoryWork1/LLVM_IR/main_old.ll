@@ -5,10 +5,7 @@
 @globla_var =  global i32 5, align 4
 ;const int maxn=6;
 @maxn =  constant i32 6, align 4
-;字符串判断提示语句
-@.str = private unnamed_addr constant [37 x i8] c"Please enter an ASCII numeric value:\00", align 1
-@.str.1 = private unnamed_addr constant [14 x i8] c" is a Letter!\00", align 1
-@.str.2 = private unnamed_addr constant [18 x i8] c" is not a Letter!\00", align 1
+
 ;函数定义
 ; int mul(int a,int b){
 ; 	return a*b;
@@ -147,48 +144,11 @@ define  i32 @main() #0 {
   ;输出数组
   %63 = getelementptr inbounds [5 x i32], [5 x i32]* %39, i64 0, i64 0 ;get the address of array
   %64 = call i32 (i32, i32*, ...) bitcast (i32 (...)* @putarray to i32 (i32, i32*, ...)*)(i32  5, i32*  %63) ;putarray(5,array)
-  br label %65
-
-65:;输入字符判断
-  ; %66 = alloca i32, align 4 ;%66 i32
-  ; %67 = call i32 (...) @getch() ;%67=c
-  ; store i32 %67, i32* %66, align 4;*%66=c
-  ; %68 = load i32, i32* %66, align 4;！！%68=load*%66=c
-  ; %69 = call i32 (i32, ...) bitcast (i32 (...)* @putch to i32 (i32, ...)*)(i32 %68);输出字符
-  %66 = call i32 (i8*, ...) bitcast (i32 (...)* @putf to i32 (i8*, ...)*)(i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str, i64 0, i64 0))
-  %67= alloca i32, align 4
-  %68 = call i32 (...) @getint()
-  store i32 %68, i32* %67, align 4
-  %69 = load i32, i32* %67, align 4;%69=c
-  %70 = call i32 (i32, ...) bitcast (i32 (...)* @putch to i32 (i32, ...)*)(i32 %69)
-  %71 = icmp sge i32 %69, 65
-  br i1 %71,label %72,label %80
-
-72:;c>=65  ->  c<=90?
-  %73 = icmp sle i32 %69,90
-  br i1 %73,label %78,label %74
-
-74:;c>90 -> c>=97?
-  %75 =icmp sge i32 %69, 97
-  br i1 %75,label %76,label %80
-
-76:;c>=97 ->c<=122?
-  %77 = icmp sle i32 %69, 122
-  br i1 %75,label %78,label %80
-78:;判断是字母
-  %79 = call i32 (i8*, ...) bitcast (i32 (...)* @putf to i32 (i8*, ...)*)(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.1, i64 0, i64 0))
-  ret i32 0
-80:;不是字母
-  %81 = call i32 (i8*, ...) bitcast (i32 (...)* @putf to i32 (i8*, ...)*)(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.2, i64 0, i64 0))
+  
   ret i32 0
 }
-;输入输出函数声明
+
 declare dso_local i32 @getint(...) #1
 declare dso_local i32 @putint(...) #1
-;数组函数声明
 declare dso_local i32 @getarray(...) #1
 declare dso_local i32 @putarray(...) #1
-;字符串判断函数声明
-declare dso_local i32 @getch(...) #1
-declare dso_local i32 @putch(...) #1
-declare dso_local i32 @putf(...) #1

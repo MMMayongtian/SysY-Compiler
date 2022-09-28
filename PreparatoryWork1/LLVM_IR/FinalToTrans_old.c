@@ -56,16 +56,4 @@ int main(){
 //输出数组
     putarray(5,array);
 	return 0;
-
-//判断输入的ASCII码是否是字母
-	putf("Please enter an ASCII numeric value:");
-  	int c;
-	c = getint();
-	putch(c);
-		if((c>=65&&c<=90)||(c>=97&&c<=122)){
-		    putf(" is a Letter!");
-        else{
-            putf(" is not a Letter!");
-        }
-	}
 }
