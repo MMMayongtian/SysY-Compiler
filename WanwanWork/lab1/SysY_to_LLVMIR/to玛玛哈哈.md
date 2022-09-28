@@ -1,6 +1,6 @@
 - makefile里我加了指令
-make ctoll :.c直接到.ll文件
-make lltoe :.ll文件直接和sylib.c混合编译得到可执行文件
+1. make ctoll :.c直接到.ll文件
+2. make lltoe :.ll文件直接和sylib.c混合编译得到可执行文件
 
 - 咱们要手动编译的代码是这个文件夹（SysY_to_LLVMIR）里的main.c文件，我又修改了一些，都写了注释，你看一下
 
