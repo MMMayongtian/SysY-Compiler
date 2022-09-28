@@ -1,5 +1,5 @@
-; ModuleID = 'tocc.c'
-source_filename = "tocc.c"
+; ModuleID = 'main.c'
+source_filename = "main.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
@@ -22,8 +22,8 @@ define dso_local i32 @mul(i32 %0, i32 %1) #0 {
 define dso_local i32 @main() #0 {
   %1 = alloca i32, align 4
   %2 = alloca i32, align 4
-  %3 = alloca float, align 4
-  %4 = alloca i32, align 4
+  %3 = alloca i32, align 4
+  %4 = alloca float, align 4
   %5 = alloca i32, align 4
   %6 = alloca [5 x i32], align 16
   %7 = alloca i32, align 4
@@ -46,71 +46,75 @@ define dso_local i32 @main() #0 {
 15:                                               ; preds = %10
   %16 = load i32, i32* %2, align 4
   %17 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %16)
-  store float 0x3FF1C28F60000000, float* %3, align 4
-  %18 = load float, float* %3, align 4
+  %18 = load i32, i32* %2, align 4
   %19 = load i32, i32* %2, align 4
-  %20 = sitofp i32 %19 to float
-  %21 = fadd float %18, %20
-  %22 = fptosi float %21 to i32
-  store i32 %22, i32* %4, align 4
-  %23 = load i32, i32* %2, align 4
+  %20 = call i32 @mul(i32 %18, i32 %19)
+  store i32 %20, i32* %3, align 4
+  %21 = load i32, i32* %3, align 4
+  %22 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %21)
+  store float 0x3FF1C28F60000000, float* %4, align 4
+  %23 = load float, float* %4, align 4
   %24 = load i32, i32* %2, align 4
-  %25 = call i32 @mul(i32 %23, i32 %24)
-  store i32 %25, i32* %5, align 4
-  %26 = load i32, i32* %2, align 4
-  %27 = load i32, i32* %2, align 4
-  %28 = mul nsw i32 %26, %27
-  store i32 %28, i32* %2, align 4
-  %29 = load i32, i32* %2, align 4
-  %30 = sdiv i32 %29, 2
-  store i32 %30, i32* %2, align 4
+  %25 = sitofp i32 %24 to float
+  %26 = fadd float %23, %25
+  %27 = fptosi float %26 to i32
+  store i32 %27, i32* %5, align 4
+  %28 = load i32, i32* %5, align 4
+  %29 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %28)
+  %30 = load i32, i32* %2, align 4
   %31 = load i32, i32* %2, align 4
-  %32 = add nsw i32 %31, 5
+  %32 = mul nsw i32 %30, %31
   store i32 %32, i32* %2, align 4
   %33 = load i32, i32* %2, align 4
-  %34 = sub nsw i32 %33, 3
+  %34 = sdiv i32 %33, 2
   store i32 %34, i32* %2, align 4
   %35 = load i32, i32* %2, align 4
-  %36 = srem i32 %35, 10
+  %36 = add nsw i32 %35, 5
   store i32 %36, i32* %2, align 4
-  %37 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 0
-  %38 = call i32 (i32*, ...) bitcast (i32 (...)* @getarray to i32 (i32*, ...)*)(i32* %37)
-  store i32 %38, i32* %7, align 4
+  %37 = load i32, i32* %2, align 4
+  %38 = sub nsw i32 %37, 3
+  store i32 %38, i32* %2, align 4
+  %39 = load i32, i32* %2, align 4
+  %40 = srem i32 %39, 10
+  store i32 %40, i32* %2, align 4
+  %41 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 0
+  %42 = call i32 (i32*, ...) bitcast (i32 (...)* @getarray to i32 (i32*, ...)*)(i32* %41)
+  store i32 %42, i32* %7, align 4
   store i32 0, i32* %8, align 4
-  br label %39
+  br label %43
 
-39:                                               ; preds = %52, %15
-  %40 = load i32, i32* %8, align 4
-  %41 = load i32, i32* %7, align 4
-  %42 = icmp slt i32 %40, %41
-  br i1 %42, label %43, label %55
-
-43:                                               ; preds = %39
+43:                                               ; preds = %56, %15
   %44 = load i32, i32* %8, align 4
-  %45 = load i32, i32* %8, align 4
-  %46 = sext i32 %45 to i64
-  %47 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 %46
-  store i32 %44, i32* %47, align 4
+  %45 = load i32, i32* %7, align 4
+  %46 = icmp slt i32 %44, %45
+  br i1 %46, label %47, label %59
+
+47:                                               ; preds = %43
   %48 = load i32, i32* %8, align 4
-  %49 = icmp sle i32 %48, 3
-  br i1 %49, label %50, label %51
+  %49 = load i32, i32* %8, align 4
+  %50 = sext i32 %49 to i64
+  %51 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 %50
+  store i32 %48, i32* %51, align 4
+  %52 = load i32, i32* %8, align 4
+  %53 = icmp sle i32 %52, 3
+  br i1 %53, label %54, label %55
 
-50:                                               ; preds = %43
-  br label %52
+54:                                               ; preds = %47
+  br label %56
 
-51:                                               ; preds = %43
-  br label %55
+55:                                               ; preds = %47
+  br label %59
 
-52:                                               ; preds = %50
-  %53 = load i32, i32* %8, align 4
-  %54 = add nsw i32 %53, 1
-  store i32 %54, i32* %8, align 4
-  br label %39
+56:                                               ; preds = %54
+  %57 = load i32, i32* %8, align 4
+  %58 = add nsw i32 %57, 1
+  store i32 %58, i32* %8, align 4
+  br label %43
 
-55:                                               ; preds = %51, %39
-  %56 = load i32, i32* %2, align 4
-  %57 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 4
-  store i32 %56, i32* %57, align 16
+59:                                               ; preds = %55, %43
+  %60 = load i32, i32* %2, align 4
+  %61 = getelementptr inbounds [5 x i32], [5 x i32]* %6, i64 0, i64 4
+  store i32 %60, i32* %61, align 16
   ret i32 0
 }
 

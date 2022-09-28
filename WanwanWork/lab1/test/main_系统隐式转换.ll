@@ -21,27 +21,20 @@ define dso_local i32 @mul(i32 %0, i32 %1) #0 {
 ; Function Attrs: noinline nounwind optnone uwtable
 define dso_local i32 @main() #0 {
   %1 = alloca i32, align 4
-  %2 = alloca i32, align 4
-  store i32 0, i32* %1, align 4
-  %3 = call i32 (...) @getint()
-  store i32 %3, i32* %2, align 4
-  br label %4
-
-4:                                                ; preds = %7, %0
-  %5 = load i32, i32* %2, align 4
-  %6 = icmp sle i32 %5, 10
-  br i1 %6, label %7, label %9
-
-7:                                                ; preds = %4
-  %8 = call i32 (...) @getint()
-  store i32 %8, i32* %2, align 4
-  br label %4
-
-9:                                                ; preds = %4
-  %10 = load i32, i32* %2, align 4
+  %2 = alloca float, align 4
+  %3 = alloca i32, align 4
+  %4 = call i32 (...) @getint()
+  store i32 %4, i32* %1, align 4
+  store float 0x3FF1C28F60000000, float* %2, align 4
+  %5 = load float, float* %2, align 4
+  %6 = load i32, i32* %1, align 4
+  %7 = sitofp i32 %6 to float
+  %8 = fadd float %5, %7
+  %9 = fptosi float %8 to i32
+  store i32 %9, i32* %3, align 4
+  %10 = load i32, i32* %3, align 4
   %11 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %10)
-  %12 = load i32, i32* %1, align 4
-  ret i32 %12
+  ret i32 0
 }
 
 declare dso_local i32 @getint(...) #1

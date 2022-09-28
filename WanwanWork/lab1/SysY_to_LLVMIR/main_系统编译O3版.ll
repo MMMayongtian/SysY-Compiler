@@ -1,5 +1,5 @@
-; ModuleID = 'tocc.c'
-source_filename = "tocc.c"
+; ModuleID = 'main.c'
+source_filename = "main.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
@@ -27,45 +27,51 @@ define dso_local i32 @main() local_unnamed_addr #1 {
 7:                                                ; preds = %4, %0
   %8 = phi i32 [ %2, %0 ], [ %5, %4 ]
   %9 = tail call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %8) #4
-  %10 = bitcast [5 x i32]* %1 to i8*
-  call void @llvm.lifetime.start.p0i8(i64 20, i8* nonnull %10) #4
-  %11 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 0
-  %12 = call i32 (i32*, ...) bitcast (i32 (...)* @getarray to i32 (i32*, ...)*)(i32* nonnull %11) #4
-  %13 = icmp sgt i32 %12, 0
-  br i1 %13, label %14, label %17
+  %10 = mul nsw i32 %8, %8
+  %11 = tail call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %10) #4
+  %12 = sitofp i32 %8 to float
+  %13 = fadd float %12, 0x3FF1C28F60000000
+  %14 = fptosi float %13 to i32
+  %15 = tail call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32, ...)*)(i32 %14) #4
+  %16 = bitcast [5 x i32]* %1 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 20, i8* nonnull %16) #4
+  %17 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 0
+  %18 = call i32 (i32*, ...) bitcast (i32 (...)* @getarray to i32 (i32*, ...)*)(i32* nonnull %17) #4
+  %19 = icmp sgt i32 %18, 0
+  br i1 %19, label %20, label %23
 
-14:                                               ; preds = %7
-  %15 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 0
-  store i32 0, i32* %15, align 16, !tbaa !2
-  %16 = icmp ugt i32 %12, 1
-  br i1 %16, label %18, label %17
+20:                                               ; preds = %7
+  %21 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 0
+  store i32 0, i32* %21, align 16, !tbaa !2
+  %22 = icmp ugt i32 %18, 1
+  br i1 %22, label %24, label %23
 
-17:                                               ; preds = %14, %21, %27, %18, %24, %7
-  call void @llvm.lifetime.end.p0i8(i64 20, i8* nonnull %10) #4
+23:                                               ; preds = %20, %27, %33, %24, %30, %7
+  call void @llvm.lifetime.end.p0i8(i64 20, i8* nonnull %16) #4
   ret i32 0
 
-18:                                               ; preds = %14
-  %19 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 1
-  store i32 1, i32* %19, align 4, !tbaa !2
-  %20 = icmp eq i32 %12, 2
-  br i1 %20, label %17, label %21
-
-21:                                               ; preds = %18
-  %22 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 2
-  store i32 2, i32* %22, align 8, !tbaa !2
-  %23 = icmp ugt i32 %12, 3
-  br i1 %23, label %24, label %17
-
-24:                                               ; preds = %21
-  %25 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 3
-  store i32 3, i32* %25, align 4, !tbaa !2
-  %26 = icmp eq i32 %12, 4
-  br i1 %26, label %17, label %27
+24:                                               ; preds = %20
+  %25 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 1
+  store i32 1, i32* %25, align 4, !tbaa !2
+  %26 = icmp eq i32 %18, 2
+  br i1 %26, label %23, label %27
 
 27:                                               ; preds = %24
-  %28 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 4
-  store i32 4, i32* %28, align 16, !tbaa !2
-  br label %17
+  %28 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 2
+  store i32 2, i32* %28, align 8, !tbaa !2
+  %29 = icmp ugt i32 %18, 3
+  br i1 %29, label %30, label %23
+
+30:                                               ; preds = %27
+  %31 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 3
+  store i32 3, i32* %31, align 4, !tbaa !2
+  %32 = icmp eq i32 %18, 4
+  br i1 %32, label %23, label %33
+
+33:                                               ; preds = %30
+  %34 = getelementptr inbounds [5 x i32], [5 x i32]* %1, i64 0, i64 4
+  store i32 4, i32* %34, align 16, !tbaa !2
+  br label %23
 }
 
 ; Function Attrs: argmemonly nounwind willreturn
