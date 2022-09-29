@@ -27,6 +27,9 @@ ir-gcc:
 ir-llvm:
 	clang -S -emit-llvm main.c
 
+ir-S:
+	llc main.ll -o main.S
+
 asm:
 	gcc -O0 -o main.S -S -masm=att main.i
     
