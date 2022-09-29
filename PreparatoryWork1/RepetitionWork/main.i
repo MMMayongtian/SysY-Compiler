@@ -4,11 +4,6 @@
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 0 "<command-line>" 2
 # 1 "main.c"
-# 1 "test.h" 1
-void function(){
-    char test[5]="test";
-};
-# 2 "main.c" 2
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
@@ -739,25 +734,17 @@ extern int __uflow (FILE *);
 extern int __overflow (FILE *, int);
 # 902 "/usr/include/stdio.h" 3 4
 
-# 3 "main.c" 2
-# 1 "test.h" 1
+# 2 "main.c" 2
 
-# 1 "test.h"
-void function(){
-    char test[5]="test";
-};
-# 4 "main.c" 2
+# 2 "main.c"
 int main() {
  int a, b, i, t, n;
-
  a = 0;
  b = 1;
  i = 1;
-
  scanf("%d", &n);
  printf("%d\n", a);
  printf("%d\n", b);
-
  while (i < n)
  {
   t = b;
@@ -766,5 +753,4 @@ int main() {
   a = t;
   i = i + 1;
  }
-
 }
