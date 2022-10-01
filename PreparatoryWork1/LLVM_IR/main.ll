@@ -6,9 +6,9 @@
 ;const int maxn=6;
 @maxn =  constant i32 6, align 4
 ;字符串判断提示语句
-@.str = private unnamed_addr constant [37 x i8] c"Please enter an ASCII numeric value:\00", align 1
-@.str.1 = private unnamed_addr constant [14 x i8] c" is a Letter!\00", align 1
-@.str.2 = private unnamed_addr constant [18 x i8] c" is not a Letter!\00", align 1
+@.str = private unnamed_addr constant [23 x i8] c"Please enter a letter:\00", align 1
+@.str.1 = private unnamed_addr constant [15 x i8] c" is a Letter!\0A\00", align 1
+@.str.2 = private unnamed_addr constant [21 x i8] c"It is not a Letter!\0A\00", align 1
 ;函数定义
 ; int mul(int a,int b){
 ; 	return a*b;

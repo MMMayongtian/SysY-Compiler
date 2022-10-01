@@ -58,7 +58,7 @@ int main(){
 	return 0;
 
 //判断输入的ASCII码是否是字母
-	putf("Please enter an ASCII numeric value:");
+	putf("Please enter a letter:");
   	int c;
 	c = getint();
 	putch(c);

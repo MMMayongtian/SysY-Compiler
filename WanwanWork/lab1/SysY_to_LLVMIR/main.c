@@ -27,20 +27,24 @@ int main(){
 	int trans = f + n;
     putint(trans);
 
+//运算符
     n = n * n;
     n = n / 2;
     n = n + 5;
     n = n - 3;
     n = n % 10;
 
+//数组输入
     int array[5];
     int len = getarray(array);
 
+//循环 更新数组
     for(int i=0;i<len;i++){
 
         array[i] = i;
 
-        if(i<=3){
+//条件 跳转
+        if(i<=1){
             continue;
         }
         else{
@@ -48,6 +52,20 @@ int main(){
         }
     }
     array[4] = n;
-
+    
+//输出数组
+    putarray(5,array);
 	return 0;
+
+//判断输入的ASCII码是否是字母
+	putf("Please enter a letter:");
+  	int c;
+	c = getint();
+	putch(c);
+		if((c>=65&&c<=90)||(c>=97&&c<=122)){
+		    putf(" is a Letter!");
+        else{
+            putf(" is not a Letter!");
+        }
+	}
 }
