@@ -1,4 +1,4 @@
-.PHONY:pre, lexer, ast-gcc, ast-llvm, cfg, ir-gcc, ir-llvm, asm, obj, exe, antiobj, antiexe,ctoll,lltoe
+.PHONY:pre, lexer, ast-gcc, ast-llvm, cfg, ir-gcc, ir-llvm, asm, obj, exe, antiobj, antiexe,ctoll,lltoe,topng
 
 pre:
 	gcc test.c -E -o test.i
@@ -54,3 +54,5 @@ ctoll:
 	clang -emit-llvm -S test.c -o test.ll
 lltoe:
 	clang test.ll sylib.c -o test
+topng:
+	dot -Tpng test.c.012t.cfg.dot -o test.png
