@@ -1,9 +1,9 @@
 %{
 /*************************
-expr1.y
+YaccTest.y
 YACC file
-Date: xxxx/xx/xx
-xxxxx <xxxxx@nbjl.nankai.edu.cn>
+Date: 2022/10/6
+Todo: test Yacc and Bison 
 ***************************/
 #include <stdio.h>
 #include <stdlib.h>

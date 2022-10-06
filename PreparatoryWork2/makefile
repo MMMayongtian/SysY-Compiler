@@ -1,4 +1,4 @@
-.PHONY:test,clean
+.PHONY:gcc,test,clean
 
 gcc:
 # 预处理   test.c → test.i
