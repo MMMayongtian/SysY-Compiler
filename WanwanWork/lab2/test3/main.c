@@ -1,19 +1,19 @@
-int globla_var = 0;
-int mul(int a,int b){
-	return a*b;
-}
 int main(){
 	int n;
-    n=getint();
-    //while语句
-	while(n<=10){
-        n=getint();
+    n = getint();
+    //运算符
+    n = n * 2;
+    n = n + 4;
+    n = n | 1;
+	//循环操作
+	for(int i = 0; i < 5; i++){
+		n = n - i;
 	}
-    //隐式转换
-	float f = 1.1;
-	globla_var = n + f; 
-    //函数调用
-    n = mul(n,globla_var);
-    putint(n);
-    putf("\n");
+	//逻辑判断
+
+	if((n>=65&&n<=90)||(n>=97&&n<=122)){
+	    putch(n);
     }
+	putf("lalalalalalala");
+	return 0;
+}

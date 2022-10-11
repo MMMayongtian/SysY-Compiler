@@ -5,22 +5,21 @@
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 32 "<command-line>" 2
 # 1 "main.c"
-int globla_var = 0;
-int mul(int a,int b){
- return a*b;
-}
 int main(){
  int n;
-    n=getint();
+    n = getint();
 
- while(n<=10){
-        n=getint();
+    n = n * 2;
+    n = n + 4;
+    n = n | 1;
+
+ for(int i = 0; i < 5; i++){
+  n = n - i;
  }
 
- float f = 1.1;
- globla_var = n + f;
-
-    n = mul(n,globla_var);
-    putint(n);
-    putf("\n");
+ if((n>=65&&n<=90)||(n>=97&&n<=122)){
+     putch(n);
     }
+ putf("\n");
+ return 0;
+}
