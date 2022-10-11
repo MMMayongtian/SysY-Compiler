@@ -1,11 +1,11 @@
 #include<stdio.h>
 //全局变量
-int globla_var=5;
+int globla_var;
+int n;
 int mul(int a,int b){
 	return a*b;
 }
 int main(){
-	int n;
     n=getint();
     //while语句
 	while(n<=10){
@@ -13,9 +13,8 @@ int main(){
 	}
     //隐式转换
 	float f = 1.1;
-	int trans = n + f;
+	globla_var = n + f;
     //函数调用
-    n = mul(n,trans);
-
+    n = mul(n,globla_var);
     return 0;
 }

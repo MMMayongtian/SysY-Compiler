@@ -1,15 +1,20 @@
 #include<stdio.h>
-int a = 0;
-int b = 0;
-int max(int a, int b) {
-    if(a >= b) {
-        return a;
-    } else {
-        return b;
-    } 
+//全局变量
+int globla_var;
+int n;
+int mul(int a,int b){
+	return a*b;
 }
-int main() {
-    scanf("%d %d", &a, &b);
-    printf("max is: %d\n", max(a, b));
-    return 0; 
+int main(){
+    n=getint();
+    //while语句
+	while(n<=10){
+        n=getint();
+	}
+    //隐式转换
+	float f = 1.1;
+	globla_var = n + f;
+    //函数调用
+    n = mul(n,globla_var);
+    return 0;
 }
