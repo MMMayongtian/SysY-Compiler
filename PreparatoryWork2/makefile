@@ -1,4 +1,4 @@
-.PHONY:gcc,test,ARM,clean
+.PHONY:gcc,test,arm,clean
 
 gcc:
 # 预处理   mToArm.c → mToArm.i
@@ -10,17 +10,15 @@ test:
 	arm-linux-gnueabihf-gcc test.i -S -o test.S
 
 run-example:
-	arm-linux-gnueabihf-gcc example.S -o example.out
+	arm-linux-gnueabihf-gcc example.S sylib.c -o example.out
 	qemu-arm ./example.out
 
 run-test:
 	arm-linux-gnueabihf-gcc test.S sylib.c -o test.out
 	qemu-arm ./test.out
 
-ARM:
-	arm-linux-gnueabihf-gcc mToArm.S -o mToArm.out
-	qemu-arm ./mToArm.out
+arm:
+	arm-linux-gnueabihf-gcc arm_assembly.S sylib.c -o arm_assembly.out
+	qemu-arm ./arm_assembly.out
 clean:
-	rm -fr mToArm.out mToArm.i mToArm.S mToArm.o
-clean-test:
-	rm -fr test.i test.S example.out
+	rm -fr arm_assembly.out test.i test.out example.out

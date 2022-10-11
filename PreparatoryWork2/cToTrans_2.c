@@ -1,11 +1,11 @@
 #include<stdio.h>
 //全局变量
-int globla_var;
-int n;
+int globla_var = 0;
 int mul(int a,int b){
 	return a*b;
 }
 int main(){
+	int n;
     n=getint();
     //while语句
 	while(n<=10){
