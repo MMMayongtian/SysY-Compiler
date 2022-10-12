@@ -1,4 +1,5 @@
 	.arch armv5t
+
 @ comm section  
 	.comm n, 4 @ global variables
 	.comm globla_var, 4 @ global variables
@@ -16,8 +17,11 @@
 	add sp, fp, #0 @ release the stack frame of function mul
 	ldr fp, [sp], #4 @ post-index mode, pop fp, sp = sp + 4
 	bx lr @ recover sp fp pc
-
+_str0:
+	.ascii "\012\000" 
+	.align 2
 	.global main
+
 main:
 	push {fp, lr}
 	add fp, sp, #4
@@ -75,11 +79,14 @@ main:
 	bl	putch(PLT)
 	b .L8
 .L7:					@ else block
-	bl putint(PLT)
+	bl	putf(PLT)
 .L8: 
+	ldr r0, _bridge+8
+	bl	putf(PLT)
 	mov r0, #0
 	pop {fp, pc} 		@ return 0
 	_bridge:
 	.word globla_var
 	.word n
+	.word _str0
 	.section .note.GNU-stack,"",%progbits @ do you know what's the use of this :-)
