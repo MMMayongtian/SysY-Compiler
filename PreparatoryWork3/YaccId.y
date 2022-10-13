@@ -40,19 +40,14 @@ void yyerror(const char* s );
 %left MUL DIV
 %left LEFTP RIGHTP
 %right UMINUS
+
 %%
 
-lines   :   lines assign ';' {}
+lines   :   lines RESULT EQUAL expr ';' { intTable[(int)$2] = $4;}
         |   lines expr ';' { printf("%f\n", $2);}
         |   lines ';'
         |
         ;
-
-assign  :   RESULT EQUAL assign {intTable[(int)$1] = $3;
-                                $$ = $3;}
-        |   expr {$$ = $1;}
-        ;
-        
 expr    :   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
         |   expr MUL expr { $$ = $1 * $3; }

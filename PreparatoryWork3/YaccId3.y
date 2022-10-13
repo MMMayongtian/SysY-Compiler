@@ -14,7 +14,7 @@ Todo: operator token
 int yylex ();
 char idStr[50];
 char* idTable[50];
-int intTable[50];
+double intTable[50];
 int tableLen = -1;
 int find(char* str){   
     for(int i=0;i<=tableLen;i++){
@@ -40,25 +40,28 @@ void yyerror(const char* s );
 %left MUL DIV
 %left LEFTP RIGHTP
 %right UMINUS
-
 %%
 
-lines   :   lines expr ';' { printf("%f\n", $2);}
+lines   :   lines assign ';' {}
+        |   lines expr ';' { printf("%f\n", $2);}
         |   lines ';'
         |
         ;
-expr    :   RESULT EQUAL expr { intTable[(int)$1] = $3;
-                                $$ = $3;
-                            }
-        |   expr ADD expr { $$ = $1 + $3; }
+
+assign  :   RESULT EQUAL assign {intTable[(int)$1] = $3;
+                                $$ = $3;}
+        |   expr {$$ = $1;}
+        ;
+        
+expr    :   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
         |   expr MUL expr { $$ = $1 * $3; }
         |   expr DIV expr { $$ = $1 / $3; }
         |   LEFTP expr RIGHTP { $$ = $2; }
         |   SUB expr %prec UMINUS { $$ = -$2; }
         |   NUMBER { $$ = $1; }
-        |   ID { $$ = intTable[(int)$1];}
-        |   RESULT { $$ = $1;}
+        |   ID { $$ = intTable[(int)$1]; }
+        ;
 %%
 
     // programs section
@@ -90,13 +93,12 @@ int yylex()
             }else{
                 yylval = index;
             }
-
             while(t == ' ' || t =='\t' || t == '\n'){
                 t=getchar();
             }
             ungetc(t,stdin);
             if(t=='='){
-            return RESULT;
+                return RESULT;
             }
             else{
                 return ID;

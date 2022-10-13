@@ -40,20 +40,16 @@ void yyerror(const char* s );
 %left MUL DIV
 %left LEFTP RIGHTP
 %right UMINUS
+
 %%
 
-lines   :   lines assign ';' {}
-        |   lines expr ';' { printf("%f\n", $2);}
+lines   :   lines expr ';' { printf("%f\n", $2);}
         |   lines ';'
         |
         ;
-
-assign  :   RESULT EQUAL assign {intTable[(int)$1] = $3;
-                                $$ = $3;}
-        |   expr {$$ = $1;}
-        ;
-        
-expr    :   expr ADD expr { $$ = $1 + $3; }
+expr    :   ID EQUAL expr { intTable[(int)$1] = $3;
+                            $$ = $3;}
+        |   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
         |   expr MUL expr { $$ = $1 * $3; }
         |   expr DIV expr { $$ = $1 / $3; }
@@ -93,16 +89,9 @@ int yylex()
             }else{
                 yylval = index;
             }
-            while(t == ' ' || t =='\t' || t == '\n'){
-                t=getchar();
-            }
             ungetc(t,stdin);
-            if(t=='='){
-                return RESULT;
-            }
-            else{
-                return ID;
-            }
+            return ID;
+
         } else if (isdigit(t)) {
             yylval = 0;
             while(isdigit(t)) {
