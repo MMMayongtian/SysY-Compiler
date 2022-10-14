@@ -1,9 +1,9 @@
 %{
 /*************************
-YaccCal.y
+Yacc1.y
 YACC file
 Date: 2022/10/6
-Todo: operator token
+Todo: 简单计算
 ***************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +25,7 @@ void yyerror(const char* s );
 %right UMINUS
 
 %%
-
+//简单表达式以分号结束
 lines   :   lines expr ';' { printf("%f\n", $2); }
         |   lines ';'
         |
@@ -39,6 +39,9 @@ expr    :   expr ADD expr { $$ = $1 + $3; }
         |   SUB expr %prec UMINUS { $$ = -$2; }
         |   NUMBER 
         ;
+//在 yacc 中由于声明的 token 都会有一个互不冲突的整数值，因此不需
+//要在 yacc 中进行对 NUMBER 这种 token 进行显式的宏定义，只声
+//明其为 token 即可。
 
 // NUMBER  :  '0' { $$ = 0.0; }
 //          | '1' { $$ = 1.0; }
@@ -64,13 +67,17 @@ int yylex()
     if(t==' '||t=='\t'||t=='\n'){}
     else if(isdigit(t)){
     yylval=0;
+    //自动定义的全局变量
     while(isdigit(t)){
         yylval=yylval*10+t-'0';
         t=getchar();
     }
+    //将读出的多余字符再次放回到缓冲区去, 下一次读数字符进行下一个单词的识别时, 会再次读出来的
+    //放回多读出的非数字字符
     ungetc(t,stdin);
     return NUMBER;
    }
+   //token替换
    else if(t=='+'){return ADD;}
    else if(t=='-'){return SUB;}
    else if(t=='*'){return MUL;}
