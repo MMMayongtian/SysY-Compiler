@@ -100,3 +100,6 @@ void yyerror(const char* s) {
     fprintf (stderr , "Parse error : %s\n", s );
     exit (1);
 }
+//测试代码      结果
+//2+672/4 ;     170.000000
+//30- 3*4 ;     18.000000

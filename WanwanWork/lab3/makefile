@@ -15,6 +15,11 @@ y2:
 	bison -d Yacc2.y
 	gcc -o Yacc2 Yacc2.tab.c
 	./Yacc2
+y3:
+	bison -d Yacc3.y
+	gcc -o Yacc3 Yacc3.tab.c
+	./Yacc3
+	rm -fr  Yacc3.tab.c  Yacc3.tab.h
 y:
 	bison -d Yacc.y
 	gcc -o Yacc Yacc.tab.c

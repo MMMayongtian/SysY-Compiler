@@ -14,7 +14,7 @@ Todo: 符号表
 int yylex ();
 //变量名
 char idStr[50];
-//标识符数组
+//标识符数组 存放所有输入的变量
 char* idTable[50];
 //标识符对应的值
 double intTable[50];
@@ -22,6 +22,7 @@ int tableLen = -1;
 //寻找变量是否已经存在
 int find(char* str){   
     for(int i=0;i<=tableLen;i++){
+        //strcmp比较两个字符串的大小，一个字符一个字符比较，按ASCLL码比较
         if(!strcmp(str,idTable[i])){
             printf("输入变量存在于idtable\n");
             return i;
@@ -44,21 +45,23 @@ void yyerror(const char* s );
 %token RESULT
 %left ADD SUB
 %left MUL DIV
-%left LEFTP RIGHTP
+%left LE RE
 %right UMINUS
 %%
+//result表示被赋值的变量
+//出现在表达式里的id（=右）
 
 lines   :   lines assign ';' {printf("输出lines assign\n");}
         |   lines expr ';' { printf("输出lines expr  %f\n", $2);}
         |   lines ';'{ printf("lines\n");}
         |
         ;
-
+            //支持连等
 assign  :   RESULT EQUAL assign {intTable[(int)$1] = $3;
                                 $$ = $3;printf("RESULT EQUAL assign\n");}
-        |   expr {$$ = $1;}
+        |   expr //支持表达式赋值
         ;
-        
+
 expr    :   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
         |   expr MUL expr { $$ = $1 * $3; }
@@ -69,21 +72,18 @@ expr    :   expr ADD expr { $$ = $1 + $3; }
         |   ID { $$ = intTable[(int)$1]; printf("expr->id\n");}
         ;
 %%
-
-    // programs section
-
+    
 int yylex()
 {
     // place your token retrieving code here
     int t;
     while(1) {
-         printf("请输入：");
         t = getchar();
         if(t == ' ' || t =='\t' || t == '\n') {
             //do nothing
-             printf("输入了换行\n");
+             
         } else if ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_')){
-            printf("输入了字母\n");
+            //输入变量
             int ti=0;
             while ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_') || (t >= '0' && t <= '9')) {
                idStr[ti] = t;
@@ -95,13 +95,13 @@ int yylex()
             int index = find(idStr);
             //不存在
             if(index == -1){
-                printf("index == -1\n");
+                //printf("index == -1\n");
                 tableLen++;
-                printf("tableLen++;tablelen=%d\n",tableLen);
+                //printf("tableLen++;tablelen=%d\n",tableLen);
                 idTable[tableLen] = (char*)malloc(50 * sizeof(char));
                 strcpy(idTable[tableLen],idStr);
                 printf("idTable[tableLen]=%s\n",idTable[tableLen]);
-                //赋值为0
+                //赋值为0（未定义变量）
                 intTable[tableLen]=0;
                 yylval = tableLen;
             }else{
@@ -113,7 +113,7 @@ int yylex()
             }
             ungetc(t,stdin);
             if(t=='='){
-                printf("输入了等号！\n");
+                printf("RESULT！\n");
                 return RESULT;
             }
             else{
@@ -127,22 +127,19 @@ int yylex()
             }
             ungetc(t,stdin);
             return NUMBER;
-        } else {
-            switch(t){
-                //添加EQUAL
-                case '=': printf("输入了“=”\n");return EQUAL;
-                case '+': printf("输入了“+”\n");return ADD;
-                case '-': return SUB;
-                case '*': return MUL;
-                case '/': return DIV;
-                case '(': return LEFTP;
-                case ')': return RIGHTP;
-                default: return t;
-            }
-        }
+        } 
+        else if(t=='='){printf("else if =");return EQUAL;}
+        else if(t=='+'){return ADD;}
+        else if(t=='-'){return SUB;}
+        else if(t=='*'){return MUL;}
+        else if(t=='/'){return DIV;}
+        else if(t=='('){return LE;}
+        else if(t==')'){return RE;}
+        else{return t;}
     }
     
 }
+
 
 int main(void)
 {

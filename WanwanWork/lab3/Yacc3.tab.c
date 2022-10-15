@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "Yacc.y"
+#line 1 "Yacc3.y"
 
 /*************************
 Yacc.y
@@ -83,7 +83,7 @@ Todo: 符号表
 int yylex ();
 //变量名
 char idStr[50];
-//标识符数组
+//标识符数组 存放所有输入的变量
 char* idTable[50];
 //标识符对应的值
 double intTable[50];
@@ -91,6 +91,7 @@ int tableLen = -1;
 //寻找变量是否已经存在
 int find(char* str){   
     for(int i=0;i<=tableLen;i++){
+        //strcmp比较两个字符串的大小，一个字符一个字符比较，按ASCLL码比较
         if(!strcmp(str,idTable[i])){
             printf("输入变量存在于idtable\n");
             return i;
@@ -103,7 +104,7 @@ extern int yyparse();
 FILE* yyin ;
 void yyerror(const char* s );
 
-#line 107 "Yacc.tab.c"
+#line 108 "Yacc3.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -136,8 +137,8 @@ void yyerror(const char* s );
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_YACC_TAB_H_INCLUDED
-# define YY_YY_YACC_TAB_H_INCLUDED
+#ifndef YY_YY_YACC3_TAB_H_INCLUDED
+# define YY_YY_YACC3_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -161,7 +162,9 @@ extern int yydebug;
     RIGHTP = 265,
     EQUAL = 266,
     RESULT = 267,
-    UMINUS = 268
+    LE = 268,
+    RE = 269,
+    UMINUS = 270
   };
 #endif
 
@@ -177,7 +180,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_YACC_TAB_H_INCLUDED  */
+#endif /* !YY_YY_YACC3_TAB_H_INCLUDED  */
 
 
 
@@ -483,10 +486,10 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   44
+#define YYLAST   51
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  15
+#define YYNTOKENS  17
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
@@ -495,7 +498,7 @@ union yyalloc
 #define YYNSTATES  27
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   268
+#define YYMAXUTOK   270
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -512,7 +515,7 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    14,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    16,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -533,15 +536,16 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    51,    51,    52,    53,    54,    57,    59,    62,    63,
-      64,    65,    66,    67,    68,    69
+       0,    54,    54,    55,    56,    57,    60,    62,    65,    66,
+      67,    68,    69,    70,    71,    72
 };
 #endif
 
@@ -551,8 +555,8 @@ static const yytype_int8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "ID", "NUMBER", "ADD", "SUB", "MUL",
-  "DIV", "LEFTP", "RIGHTP", "EQUAL", "RESULT", "UMINUS", "';'", "$accept",
-  "lines", "assign", "expr", YY_NULLPTR
+  "DIV", "LEFTP", "RIGHTP", "EQUAL", "RESULT", "LE", "RE", "UMINUS", "';'",
+  "$accept", "lines", "assign", "expr", YY_NULLPTR
 };
 #endif
 
@@ -562,11 +566,11 @@ static const char *const yytname[] =
 static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,    59
+     265,   266,   267,   268,   269,   270,    59
 };
 # endif
 
-#define YYPACT_NINF (-10)
+#define YYPACT_NINF (-12)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -580,9 +584,9 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -10,     0,   -10,   -10,   -10,     7,     7,    18,   -10,    -9,
-      16,   -10,    30,    22,   -10,     7,     7,     7,     7,   -10,
-     -10,   -10,    36,    -6,    -6,   -10,   -10
+     -12,     0,   -12,   -12,   -12,    32,    32,    -1,   -12,   -11,
+      16,   -12,    37,    22,   -12,    32,    32,    32,    32,   -12,
+     -12,   -12,    43,    -6,    -6,   -12,   -12
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -598,7 +602,7 @@ static const yytype_int8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,    14,     2
+     -12,   -12,    -2,     2
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -613,35 +617,37 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
        2,    17,    18,     3,     4,    14,     5,    11,    12,     6,
-       3,     4,     7,     5,     8,    22,     6,    23,    24,    25,
-      26,    15,    16,    17,    18,     3,     4,    21,     5,    13,
-      19,     6,     0,     0,     7,    15,    16,    17,    18,     0,
-      20,    15,    16,    17,    18
+      13,    21,     7,     0,     0,    22,     8,    23,    24,    25,
+      26,    15,    16,    17,    18,     3,     4,     0,     5,     0,
+       0,     6,    19,     0,     7,     3,     4,     0,     5,     0,
+       0,     6,    15,    16,    17,    18,     0,    20,    15,    16,
+      17,    18
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     7,     8,     3,     4,    14,     6,     5,     6,     9,
-       3,     4,    12,     6,    14,    13,     9,    15,    16,    17,
-      18,     5,     6,     7,     8,     3,     4,    13,     6,    11,
-      14,     9,    -1,    -1,    12,     5,     6,     7,     8,    -1,
-      10,     5,     6,     7,     8
+       0,     7,     8,     3,     4,    16,     6,     5,     6,     9,
+      11,    13,    12,    -1,    -1,    13,    16,    15,    16,    17,
+      18,     5,     6,     7,     8,     3,     4,    -1,     6,    -1,
+      -1,     9,    16,    -1,    12,     3,     4,    -1,     6,    -1,
+      -1,     9,     5,     6,     7,     8,    -1,    10,     5,     6,
+       7,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    16,     0,     3,     4,     6,     9,    12,    14,    17,
-      18,    18,    18,    11,    14,     5,     6,     7,     8,    14,
-      10,    17,    18,    18,    18,    18,    18
+       0,    18,     0,     3,     4,     6,     9,    12,    16,    19,
+      20,    20,    20,    11,    16,     5,     6,     7,     8,    16,
+      10,    19,    20,    20,    20,    20,    20
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    15,    16,    16,    16,    16,    17,    17,    18,    18,
-      18,    18,    18,    18,    18,    18
+       0,    17,    18,    18,    18,    18,    19,    19,    20,    20,
+      20,    20,    20,    20,    20,    20
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1344,86 +1350,80 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 51 "Yacc.y"
+#line 54 "Yacc3.y"
                              {printf("输出lines assign\n");}
-#line 1350 "Yacc.tab.c"
+#line 1356 "Yacc3.tab.c"
     break;
 
   case 3:
-#line 52 "Yacc.y"
+#line 55 "Yacc3.y"
                            { printf("输出lines expr  %f\n", yyvsp[-1]);}
-#line 1356 "Yacc.tab.c"
+#line 1362 "Yacc3.tab.c"
     break;
 
   case 4:
-#line 53 "Yacc.y"
+#line 56 "Yacc3.y"
                      { printf("lines\n");}
-#line 1362 "Yacc.tab.c"
+#line 1368 "Yacc3.tab.c"
     break;
 
   case 6:
-#line 57 "Yacc.y"
+#line 60 "Yacc3.y"
                                 {intTable[(int)yyvsp[-2]] = yyvsp[0];
                                 yyval = yyvsp[0];printf("RESULT EQUAL assign\n");}
-#line 1369 "Yacc.tab.c"
-    break;
-
-  case 7:
-#line 59 "Yacc.y"
-                 {yyval = yyvsp[0];}
-#line 1375 "Yacc.tab.c"
+#line 1375 "Yacc3.tab.c"
     break;
 
   case 8:
-#line 62 "Yacc.y"
+#line 65 "Yacc3.y"
                           { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1381 "Yacc.tab.c"
+#line 1381 "Yacc3.tab.c"
     break;
 
   case 9:
-#line 63 "Yacc.y"
+#line 66 "Yacc3.y"
                           { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1387 "Yacc.tab.c"
+#line 1387 "Yacc3.tab.c"
     break;
 
   case 10:
-#line 64 "Yacc.y"
+#line 67 "Yacc3.y"
                           { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1393 "Yacc.tab.c"
+#line 1393 "Yacc3.tab.c"
     break;
 
   case 11:
-#line 65 "Yacc.y"
+#line 68 "Yacc3.y"
                           { yyval = yyvsp[-2] / yyvsp[0]; }
-#line 1399 "Yacc.tab.c"
+#line 1399 "Yacc3.tab.c"
     break;
 
   case 12:
-#line 66 "Yacc.y"
+#line 69 "Yacc3.y"
                               { yyval = yyvsp[-1]; }
-#line 1405 "Yacc.tab.c"
+#line 1405 "Yacc3.tab.c"
     break;
 
   case 13:
-#line 67 "Yacc.y"
+#line 70 "Yacc3.y"
                                   { yyval = -yyvsp[0]; }
-#line 1411 "Yacc.tab.c"
+#line 1411 "Yacc3.tab.c"
     break;
 
   case 14:
-#line 68 "Yacc.y"
+#line 71 "Yacc3.y"
                    { yyval = yyvsp[0]; }
-#line 1417 "Yacc.tab.c"
+#line 1417 "Yacc3.tab.c"
     break;
 
   case 15:
-#line 69 "Yacc.y"
+#line 72 "Yacc3.y"
                { yyval = intTable[(int)yyvsp[0]]; printf("expr->id\n");}
-#line 1423 "Yacc.tab.c"
+#line 1423 "Yacc3.tab.c"
     break;
 
 
-#line 1427 "Yacc.tab.c"
+#line 1427 "Yacc3.tab.c"
 
       default: break;
     }
@@ -1655,23 +1655,20 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 71 "Yacc.y"
+#line 74 "Yacc3.y"
 
-
-    // programs section
-
+    
 int yylex()
 {
     // place your token retrieving code here
     int t;
     while(1) {
-         printf("请输入：");
         t = getchar();
         if(t == ' ' || t =='\t' || t == '\n') {
             //do nothing
-             printf("输入了换行\n");
+             
         } else if ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_')){
-            printf("输入了字母\n");
+            //输入变量
             int ti=0;
             while ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_') || (t >= '0' && t <= '9')) {
                idStr[ti] = t;
@@ -1683,13 +1680,13 @@ int yylex()
             int index = find(idStr);
             //不存在
             if(index == -1){
-                printf("index == -1\n");
+                //printf("index == -1\n");
                 tableLen++;
-                printf("tableLen++;tablelen=%d\n",tableLen);
+                //printf("tableLen++;tablelen=%d\n",tableLen);
                 idTable[tableLen] = (char*)malloc(50 * sizeof(char));
                 strcpy(idTable[tableLen],idStr);
                 printf("idTable[tableLen]=%s\n",idTable[tableLen]);
-                //赋值为0
+                //赋值为0（未定义变量）
                 intTable[tableLen]=0;
                 yylval = tableLen;
             }else{
@@ -1701,7 +1698,7 @@ int yylex()
             }
             ungetc(t,stdin);
             if(t=='='){
-                printf("输入了等号！\n");
+                printf("RESULT！\n");
                 return RESULT;
             }
             else{
@@ -1715,22 +1712,19 @@ int yylex()
             }
             ungetc(t,stdin);
             return NUMBER;
-        } else {
-            switch(t){
-                //添加EQUAL
-                case '=': printf("输入了“=”\n");return EQUAL;
-                case '+': printf("输入了“+”\n");return ADD;
-                case '-': return SUB;
-                case '*': return MUL;
-                case '/': return DIV;
-                case '(': return LEFTP;
-                case ')': return RIGHTP;
-                default: return t;
-            }
-        }
+        } 
+        else if(t=='='){printf("else if =");return EQUAL;}
+        else if(t=='+'){return ADD;}
+        else if(t=='-'){return SUB;}
+        else if(t=='*'){return MUL;}
+        else if(t=='/'){return DIV;}
+        else if(t=='('){return LE;}
+        else if(t==')'){return RE;}
+        else{return t;}
     }
     
 }
+
 
 int main(void)
 {
