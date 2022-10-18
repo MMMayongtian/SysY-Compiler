@@ -1,6 +1,6 @@
 %{
 /*************************
-expr1.y
+YACC2.y
 YACC file
 Date: xxxx/xx/xx
 xxxxx <xxxxx@nbjl.nankai.edu.cn>
@@ -9,6 +9,7 @@ xxxxx <xxxxx@nbjl.nankai.edu.cn>
 #include <stdlib.h>
 #include <string.h>
 #ifndef YYSTYPE
+//需要返回的是后缀表达式 是一个字符串 YYSTYPE可声明为char*
 #define YYSTYPE char*
 #endif
 char idStr[50];
@@ -34,13 +35,13 @@ lines   :   lines expr ';' { printf("%s\n", $2); }
         |   lines ';'
         |
         ;
-
+//strcpy($$,$1)也等价于 strcpy($$,yylval)
 expr    :   expr ADD expr  { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1);strcat($$,$3); strcat($$,"+ " ); }
         |   expr SUB expr  { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1);strcat($$,$3); strcat($$,"- " );}
         |   expr MUL expr  { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1);strcat($$,$3); strcat($$,"* " ); }
         |   expr DIV expr  { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1);strcat($$,$3); strcat($$,"/ " ); }
-        |   LE expr RE { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$2);strcat($$," " ); }
-        |   SUB expr %prec UMINUS { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$2);strcat($$,"- " ); }
+        |   LE expr RE { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$2);strcat($$,"" ); }
+        |   SUB expr %prec UMINUS { $$ = (char*)malloc(50*sizeof (char)); strcat($$,"- " );strcat($$,$2); }
         |   NUMBER { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1); strcat($$," " ); }
         |   ID     { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1);strcat($$," " ); } 
         ;
@@ -61,6 +62,7 @@ expr    :   expr ADD expr  { $$ = (char*)malloc(50*sizeof (char)); strcpy($$,$1)
 
     // programs section
 
+//1.词法分析函数中需要分析运算符、多位十进制整数（对应字符串）、空白字符和识别标识符ID
 int yylex()
 {
     // place your token retrieving code here
@@ -76,7 +78,9 @@ int yylex()
                 t = getchar();
                 ti++;
             }
+            //将读到的若干数字字符存为一个字符串, 最后需要在字符串的最后添加结束符\0,
             numStr[ti] = '\0';
+            //字符串地址赋值给yylval
             yylval = numStr;
             ungetc(t,stdin);
             return NUMBER;
@@ -114,3 +118,7 @@ void yyerror(const char* s) {
     fprintf (stderr , "Parse error : %s\n", s );
     exit (1);
 }
+//测试代码
+// 2+A_a2b*(1234-_haha);
+//结果
+// 2 A_a2b 1234 _haha - * +
