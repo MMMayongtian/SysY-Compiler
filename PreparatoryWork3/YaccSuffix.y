@@ -71,7 +71,7 @@ expr    :   expr ADD expr { $$ = (char*)malloc(50 * sizeof(char));
                                 }
 
         |   SUB expr %prec UMINUS { $$ = (char*)malloc(50 * sizeof(char));
-                                    strcpy($$,$1);
+                                    strcpy($$,"-");
                                     strcat($$,$2);
                                     strcat($$," ");
                                     }

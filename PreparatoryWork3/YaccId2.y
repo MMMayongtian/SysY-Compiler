@@ -44,12 +44,15 @@ void yyerror(const char* s );
 %%
 
 lines   :   lines expr ';' { printf("%f\n", $2);}
+        |   lines assign ';'
         |   lines ';'
         |
         ;
-expr    :   ID EQUAL expr { intTable[(int)$1] = $3;
-                            $$ = $3;}
-        |   expr ADD expr { $$ = $1 + $3; }
+assign  :   ID EQUAL assign {intTable[(int)$1] = $3;
+                                $$ = $3;} 
+        |   expr {$$ = $1;}
+        ;
+expr    :   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
         |   expr MUL expr { $$ = $1 * $3; }
         |   expr DIV expr { $$ = $1 / $3; }
