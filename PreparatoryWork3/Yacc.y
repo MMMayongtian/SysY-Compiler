@@ -1,67 +1,82 @@
 %{
 /*************************
-YaccCal.y
+expr1.y
 YACC file
-Date: 2022/10/6
-Todo: operator token
+Date: xxxx/xx/xx
+xxxxx <xxxxx@nbjl.nankai.edu.cn>
 ***************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #ifndef YYSTYPE
-#define YYSTYPE double
+#define YYSTYPE char*
 #endif
-int yylex ();
 char idStr[50];
-char* idTable[50];
-double intTable[50];
-int tableLen = -1;
-int find(char* str){   
-    for(int i=0;i<=tableLen;i++){
-        if(!strcmp(str,idTable[i])){
-            return i;
-        }
-    }
-    return -1;
-}
+char numStr[50];
+int yylex ();
 extern int yyparse();
 FILE* yyin ;
 void yyerror(const char* s );
 %}
 
-%token ID
 %token NUMBER
-%token ADD SUB
-%token MUL DIV
-%token LEFTP RIGHTP
-%token EQUAL
-%token RESULT
+%token ID
+%token ADD
+%token SUB
+%token MUL
+%token DIV
+%token LEFTP 
+%token RIGHTP
 %left ADD SUB
 %left MUL DIV
 %left LEFTP RIGHTP
 %right UMINUS
+
 %%
 
-lines   :   lines assign ';' {}
-        |   lines expr ';' { printf("%f\n", $2);}
+lines   :   lines expr ';' { printf("%s\n", $2); }
         |   lines ';'
         |
         ;
 
-assign  :   RESULT EQUAL assign {intTable[(int)$1] = $3;
-                                $$ = $3;}
-        |   expr {$$ = $1;}
+expr    :   expr ADD expr { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$,$3); 
+                            strcat($$,"+ "); }
+        |   expr SUB expr { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$,$3); 
+                            strcat($$,"- "); }
+        |   expr MUL expr { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$,$3); 
+                            strcat($$,"* "); }
+        |   expr DIV expr { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$,$3); 
+                            strcat($$,"/ "); }
+
+        |   NUMBER        { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$," ");
+                            
+                            }
+        |   ID            { $$ = (char*)malloc(50 * sizeof(char));
+                            strcpy($$,$1);
+                            strcat($$," ");
+                            }                  
+
+        |   LEFTP expr RIGHTP { $$ = (char*)malloc(50 * sizeof(char));
+                                strcpy($$,$2);
+                                }
+
+        |   SUB expr %prec UMINUS { $$ = (char*)malloc(50 * sizeof(char));
+                                    strcpy($$,"-");
+                                    strcat($$,$2);
+                                    strcat($$," ");
+                                    }
         ;
-        
-expr    :   expr ADD expr { $$ = $1 + $3; }
-        |   expr SUB expr { $$ = $1 - $3; }
-        |   expr MUL expr { $$ = $1 * $3; }
-        |   expr DIV expr { $$ = $1 / $3; }
-        |   LEFTP expr RIGHTP { $$ = $2; }
-        |   SUB expr %prec UMINUS { $$ = -$2; }
-        |   NUMBER { $$ = $1; }
-        |   ID { $$ = intTable[(int)$1]; }
-        ;
+
 %%
 
     // programs section
@@ -72,48 +87,32 @@ int yylex()
     int t;
     while(1) {
         t = getchar();
-        if(t == ' ' || t =='\t' || t == '\n') {
+        if (t == ' ' || t =='\t' || t == '\n') {
             //do nothing
-        } else if ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_')){
-            int ti=0;
+        } else if (t >= '0' && t <= '9') {
+            int ti = 0;
+            while (t >= '0' && t <= '9') {
+                numStr[ti]=t;
+                t = getchar();
+                ti++;
+            }
+            numStr[ti] = '\0';
+            yylval = numStr;
+            ungetc(t,stdin);
+            return NUMBER;
+        } else if ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_') || (t >= '0' && t <= '9')) {
+            int ti = 0;
             while ((t >= 'a' && t <= 'z') || (t >= 'A' && t <= 'Z') || (t == '_') || (t >= '0' && t <= '9')) {
-               idStr[ti] = t;
+                idStr[ti] = t;
                 ti++;
                 t = getchar();
             }
             idStr[ti] = '\0';
-
-            int index = find(idStr);
-            if(index == -1){
-                tableLen++;
-                idTable[tableLen] = (char*)malloc(50 * sizeof(char));
-                strcpy(idTable[tableLen],idStr);
-                intTable[tableLen]=0;
-                yylval = tableLen;
-            }else{
-                yylval = index;
-            }
-            while(t == ' ' || t =='\t' || t == '\n'){
-                t=getchar();
-            }
+            yylval = idStr;
             ungetc(t,stdin);
-            if(t=='='){
-                return RESULT;
-            }
-            else{
-                return ID;
-            }
-        } else if (isdigit(t)) {
-            yylval = 0;
-            while(isdigit(t)) {
-                yylval = yylval * 10 + t - '0';
-                t = getchar();
-            }
-            ungetc(t,stdin);
-            return NUMBER;
+            return ID;
         } else {
             switch(t){
-                case '=': return EQUAL;
                 case '+': return ADD;
                 case '-': return SUB;
                 case '*': return MUL;
@@ -129,6 +128,7 @@ int yylex()
 int main(void)
 {
     yyin = stdin ;
+
     do {
         yyparse();
     } while (! feof (yyin));

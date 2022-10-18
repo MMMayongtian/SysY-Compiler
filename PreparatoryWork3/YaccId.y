@@ -43,10 +43,14 @@ void yyerror(const char* s );
 
 %%
 
-lines   :   lines RESULT EQUAL expr ';' { intTable[(int)$2] = $4;}
-        |   lines expr ';' { printf("%f\n", $2);}
+lines   :   lines expr ';' { printf("%f\n", $2);}
+        |   lines assign ';'
         |   lines ';'
         |
+        ;
+assign  :   ID EQUAL assign {intTable[(int)$1] = $3;
+                                $$ = $3;} 
+        |   expr {$$ = $1;}
         ;
 expr    :   expr ADD expr { $$ = $1 + $3; }
         |   expr SUB expr { $$ = $1 - $3; }
@@ -88,16 +92,9 @@ int yylex()
             }else{
                 yylval = index;
             }
-            while(t == ' ' || t =='\t' || t == '\n'){
-                t=getchar();
-            }
             ungetc(t,stdin);
-            if(t=='='){
-                return RESULT;
-            }
-            else{
-                return ID;
-            }
+            return ID;
+
         } else if (isdigit(t)) {
             yylval = 0;
             while(isdigit(t)) {
