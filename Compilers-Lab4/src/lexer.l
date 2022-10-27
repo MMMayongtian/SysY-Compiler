@@ -23,8 +23,7 @@
     extern FILE *yyin; 
     extern FILE *yyout;
     int idCount = 0;
-    int col = 1;
-    int num = 1;
+    int col = 0;
     char idMap[100][100];
     int id_scope[100];
     int now_scope = 0;
@@ -44,9 +43,9 @@
     #endif
 %}
 COMENTLINE (\/\/[^\n]*)
-OCTA (0[1-7][0-7]*|0)
 DECI ([1-9][0-9]*|0)
-HEXA (0(x|X)[1-F][0-F]*|0)
+OCTA (0([1-7][0-7]*|0))
+HEXA (0(x|X)([1-9a-fA-F][0-9a-fA-F]*|0))
 ID [[:alpha:]_][[:alpha:][:digit:]_]*
 EOL (\r\n|\n|\r)
 WHITE [\t ]
@@ -266,7 +265,7 @@ commentend "*/"
                 break;
             } 
         }
-        if(flag&&id_scope[i]!=-1&&id_scope[i]<=now_scope){
+        if(flag&&id_scope[i]!=-1&&id_scope[i]==now_scope){
                 sprintf(pointer,"%p",idMap[i]);
         }
         else{
@@ -282,15 +281,48 @@ commentend "*/"
 }
 {DECI} {
     #ifdef ONLY_FOR_LEX
-        DEBUG_FOR_LAB4("DECI",yytext);
+        DEBUG_FOR_LAB4("NUMBER",yytext);
     #else
-        return DECI;
+        return NUMBER;
     #endif    
 }
-
+{OCTA} {
+    #ifdef ONLY_FOR_LEX
+        int num = 0;
+        for(int i = 1; i < yyleng - 1; i++){
+            num = num * 8 + (yytext[i] - '0');
+        }
+        char numStr[10];
+        sprintf(numStr,"%d",num);
+        DEBUG_FOR_LAB4("NUMBER",numStr);
+    #else
+        return NUMBER;
+    #endif
+}
+{HEXA}  {
+    #ifdef ONLY_FOR_LEX
+        int num = 0;
+        for(int i = 2; i < yyleng; i++){
+            if(yytext[i]>='a'&&yytext[i]<='z'){
+                num = num * 16 + (yytext[i] - 'a') + 10;
+            }
+            else if(yytext[i]>='A'&&yytext[i]<='Z'){
+                num = num * 16 + (yytext[i] - 'A') + 10;
+            }
+            else{
+                num = num * 16 + (yytext[i] - '0');
+            }
+        }
+        char numStr[10];
+        sprintf(numStr,"%d",num);
+        DEBUG_FOR_LAB4("NUMBER",numStr);
+    #else
+        return NUMBER;
+    #endif
+}
 {COMENTLINE}
-{EOL} {col = 1;}
-{WHITE}
+{EOL} {col = 0;}
+{WHITE} 
 %%
 
 #ifdef ONLY_FOR_LEX
@@ -311,7 +343,7 @@ int main(int argc, char **argv){
         exit(EXIT_FAILURE);
     }
     char Header[80];
-    sprintf(Header,"token     lexeme    lineno    offset    pointer_to_scope\n");
+    sprintf(Header,"token     lexeme    lineno    offset    attribute\n");
     fputs(Header, yyout);
     yylex();
     return 0;
