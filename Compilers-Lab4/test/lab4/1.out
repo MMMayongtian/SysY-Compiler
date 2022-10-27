@@ -1,20 +1,31 @@
-[DEBUG LAB4]: 	INT	int
-a[DEBUG LAB4]: 	SEMICOLON	;
-[DEBUG LAB4]: 	INT	int
-main[DEBUG LAB4]: 	LPAREN	(
-[DEBUG LAB4]: 	RPAREN	)
-[DEBUG LAB4]: 	LBRACE	{
-[DEBUG LAB4]: 	INT	int
-a[DEBUG LAB4]: 	SEMICOLON	;
-a[DEBUG LAB4]: 	ASSIGN	=
-1[DEBUG LAB4]: 	ADD	+
-2[DEBUG LAB4]: 	SEMICOLON	;
-[DEBUG LAB4]: 	IF	if
-[DEBUG LAB4]: 	LPAREN	(
-a[DEBUG LAB4]: 	LESS	<
-5[DEBUG LAB4]: 	RPAREN	)
-[DEBUG LAB4]: 	RETURN	return
-1[DEBUG LAB4]: 	SEMICOLON	;
-[DEBUG LAB4]: 	RETURN	return
-0[DEBUG LAB4]: 	SEMICOLON	;
-[DEBUG LAB4]: 	RBRACE	}
+token     lexeme    lineno    offset    pointer_to_scope
+INT       int       1         1         
+ID        a         1         4         0x55a2ea1b60c0
+SEMI      ;         1         5         
+INT       int       3         1         
+MAIN      main      3         4         
+LPAREN    (         3         8         
+RPAREN    )         3         9         
+LBRACE    {         4         1         
+INT       int       5         1         
+ID        a         5         4         0x55a2ea1b60c0
+SEMI      ;         5         5         
+ID        a         6         1         0x55a2ea1b60c0
+ASSIGN    =         6         2         
+DECI      1         6         3         1         
+PLUS      +         6         4         
+DECI      2         6         5         2         
+SEMI      ;         6         6         
+IF        if        7         1         
+LPAREN    (         7         3         
+ID        a         7         4         0x55a2ea1b60c0
+LESS      <         7         5         
+DECI      5         7         6         5         
+RPAREN    )         7         7         
+RETURN    return    8         1         
+DECI      1         8         7         1         
+SEMI      ;         8         8         
+RETURN    return    9         1         
+DECI      0         9         7         0         
+SEMI      ;         9         8         
+RBRACE    }         10        1         
