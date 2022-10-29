@@ -1,81 +1,81 @@
-token     lexeme    lineno    offset    pointer_to_scope
-INT       int       3         1         
-ID        f         3         4         0x55917d7ad0c0
-LPAREN    (         3         5         
-RPAREN    )         3         6         
-LBRACE    {         3         7         
-INT       int       4         1         
-ID        a         4         4         0x55917d7ad124
-SEMI      ;         4         5         
-ID        a         5         1         0x55917d7ad124
-ASSIGN    =         5         2         
-DECI      0         5         3         0         
-SEMI      ;         5         4         
-WHILE     while     6         1         
-LPAREN    (         6         6         
-ID        a         6         7         0x55917d7ad124
-LESS      <         6         8         
-DECI      10        6         9         10        
-RPAREN    )         6         11        
-LBRACE    {         6         12        
-ID        a         7         1         0x55917d7ad124
-ASSIGN    =         7         2         
-ID        a         7         3         0x55917d7ad124
-MULT      *         7         4         
-DECI      2345      7         5         2345      
-SEMI      ;         7         9         
-RBRACE    }         8         1         
-RETURN    return    9         1         
-ID        a         9         7         0x55917d7ad124
-SEMI      ;         9         8         
-RBRACE    }         10        1         
-INT       int       12        1         
-MAIN      main      12        4         
-LPAREN    (         12        8         
-RPAREN    )         12        9         
-LBRACE    {         12        10        
-INT       int       13        1         
-ID        _testid   13        4         0x55917d7ad188
-SEMI      ;         13        11        
-ID        _testid   14        1         0x55917d7ad188
-ASSIGN    =         14        8         
-DECI      0         14        9         0         
-SEMI      ;         14        10        
-IF        if        15        1         
-LPAREN    (         15        3         
-ID        _testid   15        4         0x55917d7ad188
+token     lexeme    lineno    offset    attribute
+INT       int       3         0         
+ID        f         3         3         0x560033b190a0
+LPAREN    (         3         4         
+RPAREN    )         3         5         
+LBRACE    {         3         6         
+INT       int       4         0         
+ID        a         4         3         0x560033b19104
+SEMI      ;         4         4         
+ID        a         5         0         0x560033b19104
+ASSIGN    =         5         1         
+NUMBER    0x1A      5         2         26        
+SEMI      ;         5         6         
+WHILE     while     6         0         
+LPAREN    (         6         5         
+ID        a         6         6         0x560033b19104
+LESS      <         6         7         
+NUMBER    10        6         8         10        
+RPAREN    )         6         10        
+LBRACE    {         6         11        
+ID        a         7         0         0x560033b19168
+ASSIGN    =         7         1         
+ID        a         7         2         0x560033b19168
+MULT      *         7         3         
+NUMBER    2345      7         4         2345      
+SEMI      ;         7         8         
+RBRACE    }         8         0         
+RETURN    return    9         0         
+ID        a         9         6         0x560033b191cc
+SEMI      ;         9         7         
+RBRACE    }         10        0         
+INT       int       12        0         
+MAIN      main      12        3         
+LPAREN    (         12        7         
+RPAREN    )         12        8         
+LBRACE    {         12        9         
+INT       int       13        0         
+ID        _testid   13        3         0x560033b19230
+SEMI      ;         13        10        
+ID        _testid   14        0         0x560033b19230
+ASSIGN    =         14        7         
+NUMBER    0         14        8         0         
+SEMI      ;         14        9         
+IF        if        15        0         
+LPAREN    (         15        2         
+ID        _testid   15        3         0x560033b19230
+ASSIGN    =         15        10        
 ASSIGN    =         15        11        
-ASSIGN    =         15        12        
-DECI      0         15        13        0         
-RPAREN    )         15        14        
-LBRACE    {         15        15        
-INT       int       16        1         
-ID        _testid   16        4         0x55917d7ad188
-SEMI      ;         16        11        
-INT       int       17        1         
-ID        _testid2  17        4         0x55917d7ad1ec
-SEMI      ;         17        12        
-ID        _testid1  18        1         0x55917d7ad250
-ASSIGN    =         18        9         
-ID        _testid1  18        10        0x55917d7ad250
-PLUS      +         18        18        
-DECI      1         18        19        1         
-SEMI      ;         18        20        
-RBRACE    }         19        1         
-LBRACE    {         23        1         
-INT       int       24        1         
-ID        a         24        4         0x55917d7ad2b4
-SEMI      ;         24        5         
-RBRACE    }         25        1         
-LBRACE    {         26        1         
-INT       int       27        1         
-ID        a         27        4         0x55917d7ad318
-SEMI      ;         27        5         
-RBRACE    }         28        1         
-INT       int       29        1         
-ID        b         29        4         0x55917d7ad37c
-SEMI      ;         29        5         
-RETURN    return    30        1         
-DECI      0         30        7         0         
-SEMI      ;         30        8         
-RBRACE    }         31        1         
+NUMBER    0         15        12        0         
+RPAREN    )         15        13        
+LBRACE    {         15        14        
+INT       int       16        0         
+ID        _testid   16        3         0x560033b19294
+SEMI      ;         16        10        
+INT       int       17        0         
+ID        _testid2  17        3         0x560033b192f8
+SEMI      ;         17        11        
+ID        _testid1  18        0         0x560033b1935c
+ASSIGN    =         18        8         
+ID        _testid1  18        9         0x560033b1935c
+PLUS      +         18        17        
+NUMBER    1         18        18        1         
+SEMI      ;         18        19        
+RBRACE    }         19        0         
+LBRACE    {         23        0         
+INT       int       24        0         
+ID        a         24        3         0x560033b193c0
+SEMI      ;         24        4         
+RBRACE    }         25        0         
+LBRACE    {         26        0         
+INT       int       27        0         
+ID        a         27        3         0x560033b19424
+SEMI      ;         27        4         
+RBRACE    }         28        0         
+INT       int       29        0         
+ID        b         29        3         0x560033b19488
+SEMI      ;         29        4         
+RETURN    return    30        0         
+NUMBER    0         30        6         0         
+SEMI      ;         30        7         
+RBRACE    }         31        0         
