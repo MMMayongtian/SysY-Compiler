@@ -23,10 +23,15 @@
     extern FILE *yyin; 
     extern FILE *yyout;
     int idCount = 0;
+    //偏移
     int col = 0;
+    //符号表
     char idMap[100][100];
+    //符号作用域
     int id_scope[100];
+    //当前作用域
     int now_scope = 0;
+
     void DEBUG_FOR_LAB4(std::string s,char *str){
         //std::string DEBUG_INFO = "[DEBUG LAB4]: \t" + s + "\t" + to_string(yylineno) + "\n";
         char INFO[100];
@@ -259,15 +264,18 @@ commentend "*/"
         int i = idCount-1;
         bool flag = false;
         char pointer[100];
+        //变量
         for(;i>=0;i--){
             if(strcmp(idMap[i],yytext)==0){
                 flag = true;
                 break;
             } 
         }
+        //原来的作用域
         if(flag&&id_scope[i]!=-1&&id_scope[i]==now_scope){
                 sprintf(pointer,"%p",idMap[i]);
         }
+        //新作用域
         else{
             strcpy(idMap[idCount],yytext);
             id_scope[idCount] = now_scope;
