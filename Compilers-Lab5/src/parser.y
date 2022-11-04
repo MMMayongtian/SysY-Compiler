@@ -40,7 +40,7 @@
 %token RETURN
 
 %nterm <stmttype> Stmts Stmt AssignStmt BlockStmt IfStmt WhileStmt ReturnStmt DeclStmt FuncDef
-%nterm <exprtype> Exp MulExp AddExp Cond LOrExp PrimaryExp LVal RelExp LAndExp
+%nterm <exprtype> Exp MulExp AddExp Cond LOrExp UnaryExp PrimaryExp LVal RelExp LAndExp
 %nterm <type> Type
 
 %precedence THEN
@@ -134,9 +134,25 @@ PrimaryExp
         $$ = new Constant(se);
     }
     ;
-MulExp
+UnaryExp
     :
     PrimaryExp {$$ = $1;}
+    |
+    SUB PrimaryExp 
+    {
+        SymbolEntry *se = new TemporarySymbolEntry(TypeSystem::intType, SymbolTable::getLabel());
+        $$ = new UnaryExpr(se, UnaryExpr::SUB, $2);
+    }
+    |
+    NON PrimaryExp
+    {
+        SymbolEntry *se = new TemporarySymbolEntry(TypeSystem::intType, SymbolTable::getLabel());
+        $$ = new UnaryExpr(se, UnaryExpr::NON, $2);
+    }
+    ;
+MulExp
+    :
+    UnaryExp {$$ = $1;}
     |
     MulExp MUL PrimaryExp
     {
@@ -253,7 +269,7 @@ DeclStmt
         SymbolEntry *se;
         se = new IdentifierSymbolEntry($2, $3, identifiers->getLevel());
         identifiers->install($3, se);
-        $$ = new DeclStmt(new Id(se));
+        $$ = new ConstDeclStmt(new Id(se));
         delete []$3;        
     }
     ;

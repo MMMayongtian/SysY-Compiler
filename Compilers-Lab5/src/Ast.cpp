@@ -68,6 +68,23 @@ void BinaryExpr::output(int level)
     expr2->output(level + 4);
 }
 
+void UnaryExpr::output(int level)
+{
+    std::string op_str;
+    switch(op)
+    {
+        case SUB:
+            op_str = "minus";
+            break;
+        case NON:
+            op_str = "non";
+            break;    
+    }
+    fprintf(yyout, "%*cUnaryExpr\top: %s\n", level, ' ', op_str.c_str());
+    expr->output(level + 4);
+}
+
+
 void Constant::output(int level)
 {
     std::string type, value;
@@ -99,6 +116,12 @@ void SeqNode::output(int level)
     fprintf(yyout, "%*cSequence\n", level, ' ');
     stmt1->output(level + 4);
     stmt2->output(level + 4);
+}
+
+void ConstDeclStmt::output(int level)
+{
+    fprintf(yyout, "%*cConstDeclStmt\n", level, ' ');
+    id->output(level + 4);
 }
 
 void DeclStmt::output(int level)

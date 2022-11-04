@@ -35,6 +35,17 @@ public:
     void output(int level);
 };
 
+class UnaryExpr : public ExprNode
+{
+private:
+    int op;
+    ExprNode *expr;
+public:
+    enum {SUB, NON};
+    UnaryExpr(SymbolEntry *se, int op, ExprNode*expr) : ExprNode(se), op(op), expr(expr) {};
+    void output(int level);
+};
+
 class Constant : public ExprNode
 {
 public:
@@ -76,6 +87,15 @@ private:
     Id *id;
 public:
     DeclStmt(Id *id) : id(id){};
+    void output(int level);
+};
+
+class ConstDeclStmt : public StmtNode
+{
+private:
+    Id *id;
+public:
+    ConstDeclStmt(Id *id) : id(id){};
     void output(int level);
 };
 
