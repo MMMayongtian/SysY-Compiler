@@ -1,53 +1,55 @@
 #ifndef __SYMBOLTABLE_H__
 #define __SYMBOLTABLE_H__
 
-#include <string>
+#include <assert.h>
 #include <map>
+#include <string>
 
 class Type;
 
-class SymbolEntry
-{
-private:
+class SymbolEntry {
+   private:
     int kind;
-protected:
-    enum {CONSTANT, VARIABLE, TEMPORARY};
-    Type *type;
 
-public:
-    SymbolEntry(Type *type, int kind);
-    virtual ~SymbolEntry() {};
-    bool isConstant() const {return kind == CONSTANT;};
-    bool isTemporary() const {return kind == TEMPORARY;};
-    bool isVariable() const {return kind == VARIABLE;};
-    Type* getType() {return type;};
+   protected:
+    enum { CONSTANT, VARIABLE, TEMPORARY };
+    Type* type;
+
+   public:
+    SymbolEntry(Type* type, int kind);
+    virtual ~SymbolEntry(){};
+    bool isConstant() const { return kind == CONSTANT; };
+    bool isTemporary() const { return kind == TEMPORARY; };
+    bool isVariable() const { return kind == VARIABLE; };
+    Type* getType() { return type; };
     virtual std::string toStr() = 0;
     // You can add any function you need here.
 };
 
-
-/*  
+/*
     Symbol entry for literal constant. Example:
 
     int a = 1;
 
     Compiler should create constant symbol entry for literal constant '1'.
 */
-class ConstantSymbolEntry : public SymbolEntry
-{
-private:
+class ConstantSymbolEntry : public SymbolEntry {
+   private:
     int value;
+    std::string strValue;
 
-public:
-    ConstantSymbolEntry(Type *type, int value);
-    virtual ~ConstantSymbolEntry() {};
-    int getValue() const {return value;};
+   public:
+    ConstantSymbolEntry(Type* type, int value);
+    ConstantSymbolEntry(Type* type, std::string strValue);
+    ConstantSymbolEntry(Type* type);
+    virtual ~ConstantSymbolEntry(){};
+    int getValue() const;
+    std::string getStrValue() const;
     std::string toStr();
     // You can add any function you need here.
 };
 
-
-/* 
+/*
     Symbol entry for identifier. Example:
 
     int a;
@@ -60,7 +62,8 @@ public:
         }
     }
 
-    Compiler should create identifier symbol entries for variables a, b, c, d and e:
+    Compiler should create identifier symbol entries for variables a, b, c, d
+   and e:
 
     | variable | scope    |
     | a        | GLOBAL   |
@@ -69,24 +72,27 @@ public:
     | d        | LOCAL    |
     | e        | LOCAL +1 |
 */
-class IdentifierSymbolEntry : public SymbolEntry
-{
-private:
-    enum {GLOBAL, PARAM, LOCAL};
+class IdentifierSymbolEntry : public SymbolEntry {
+   private:
+    enum { GLOBAL, PARAM, LOCAL };
     std::string name;
     int scope;
+    int value;
+    bool initial;
+
     // You can add any field you need here.
 
-public:
-    IdentifierSymbolEntry(Type *type, std::string name, int scope);
-    virtual ~IdentifierSymbolEntry() {};
+   public:
+    IdentifierSymbolEntry(Type* type, std::string name, int scope);
+    virtual ~IdentifierSymbolEntry(){};
     std::string toStr();
-    int getScope() const {return scope;};
+    int getScope() const { return scope; };
+    void setValue(int value);
+    int getValue() const { return value; };
     // You can add any function you need here.
 };
 
-
-/* 
+/*
     Symbol entry for temporary variable created by compiler. Example:
 
     int a;
@@ -104,36 +110,36 @@ public:
     | t1                 | 1     |
     | t2                 | 2     |
 */
-class TemporarySymbolEntry : public SymbolEntry
-{
-private:
+class TemporarySymbolEntry : public SymbolEntry {
+   private:
     int label;
-public:
-    TemporarySymbolEntry(Type *type, int label);
-    virtual ~TemporarySymbolEntry() {};
+
+   public:
+    TemporarySymbolEntry(Type* type, int label);
+    virtual ~TemporarySymbolEntry(){};
     std::string toStr();
     // You can add any function you need here.
 };
 
 // symbol table managing identifier symbol entries
-class SymbolTable
-{
-private:
+class SymbolTable {
+   private:
     std::map<std::string, SymbolEntry*> symbolTable;
-    SymbolTable *prev;
+    SymbolTable* prev;
     int level;
     static int counter;
-public:
+
+   public:
     SymbolTable();
-    SymbolTable(SymbolTable *prev);
+    SymbolTable(SymbolTable* prev);
     void install(std::string name, SymbolEntry* entry);
     SymbolEntry* lookup(std::string name);
-    SymbolTable* getPrev() {return prev;};
-    int getLevel() {return level;};
-    static int getLabel() {return counter++;};
+    SymbolTable* getPrev() { return prev; };
+    int getLevel() { return level; };
+    static int getLabel() { return counter++; };
 };
 
-extern SymbolTable *identifiers;
-extern SymbolTable *globals;
+extern SymbolTable* identifiers;
+extern SymbolTable* globals;
 
 #endif
