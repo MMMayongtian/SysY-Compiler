@@ -6,9 +6,7 @@
     #include <stack>
     extern Ast ast;
     int yylex();
-    int yyerror(char const*);
-    int idx;
-    int leftCnt = 0;
+    int yyerror( char const * );
 }
 
 %code requires {
@@ -27,7 +25,7 @@
 }
 
 %start Program
-%token <strtype> ID
+%token <strtype> ID 
 %token <itype> INTEGER
 %token IF ELSE WHILE
 %token INT VOID

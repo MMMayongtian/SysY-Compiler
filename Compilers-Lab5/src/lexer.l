@@ -2,10 +2,12 @@
 %{
     #define YY_NO_UNPUT
     #define YY_NO_INPUT
+
     #include "parser.h"
     #include <ostream>
     #include <fstream>
     using namespace std;
+
     extern FILE *yyin; 
     extern FILE *yyout;
     extern bool dump_tokens;
@@ -16,6 +18,7 @@
     }
     #include <iostream>
 %}
+
 DECIMIAL ([1-9][0-9]*|0)
 OCTAL (0[0-7]+)
 HEXADECIMAL (0[xX][0-9A-Fa-f]+)
@@ -28,6 +31,7 @@ BLOCKCOMMENTEND \*\/
 %x BLOCKCOMMENT
 LINECOMMENT \/\/[^\n]*
 %%
+
 "int" {
     /*
     * Questions: 

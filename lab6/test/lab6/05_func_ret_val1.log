@@ -1,0 +1,5 @@
+return-statement with a value, in function returning 'void'
+test/lab6/05_func_ret_val1.ll:9:7: error: value doesn't match function result type 'void'
+  ret i32 %t5
+      ^
+1 error generated.
