@@ -1,5 +1,0 @@
-redefinition of 'error_func i32(i32)'
-test/lab6/04_func_redef.ll:8:12: error: invalid redefinition of function 'func'
-define i32 @func(i32 %t3, i32 %t5, i32 %t7) {
-           ^
-1 error generated.

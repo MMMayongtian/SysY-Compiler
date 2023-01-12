@@ -1,6 +1,6 @@
 /* Missing return stmt */
 
-int func(int a, int b)
+void func(int a, int b)
 {
 	int sum = a + b;
 }
