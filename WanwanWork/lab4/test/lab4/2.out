@@ -1,59 +1,81 @@
-//iamafunction:thisfunctionhasmanysyntaxerrors.[DEBUG LAB4]: 	INT	int3
-f[DEBUG LAB4]: 	LPAREN	(3
-[DEBUG LAB4]: 	RPAREN	)3
-[DEBUG LAB4]: 	LBRACE	{3
-[DEBUG LAB4]: 	INT	int4
-a[DEBUG LAB4]: 	SEMICOLON	;4
-a[DEBUG LAB4]: 	ASSIGN	=5
-0[DEBUG LAB4]: 	SEMICOLON	;5
-[DEBUG LAB4]: 	WHILE	while6
-[DEBUG LAB4]: 	LPAREN	(6
-a[DEBUG LAB4]: 	LESS	<6
-10[DEBUG LAB4]: 	RPAREN	)6
-[DEBUG LAB4]: 	LBRACE	{6
-a[DEBUG LAB4]: 	ASSIGN	=7
-a*2345[DEBUG LAB4]: 	SEMICOLON	;7
-[DEBUG LAB4]: 	RBRACE	}8
-[DEBUG LAB4]: 	RETURN	return9
-a[DEBUG LAB4]: 	SEMICOLON	;9
-[DEBUG LAB4]: 	RBRACE	}10
-[DEBUG LAB4]: 	INT	int12
-[DEBUG LAB4]: 	MAIN	main12
-[DEBUG LAB4]: 	LPAREN	(12
-[DEBUG LAB4]: 	RPAREN	)12
-[DEBUG LAB4]: 	LBRACE	{12
-[DEBUG LAB4]: 	INT	int13
-_testid[DEBUG LAB4]: 	SEMICOLON	;13
-_testid[DEBUG LAB4]: 	ASSIGN	=14
-0[DEBUG LAB4]: 	SEMICOLON	;14
-[DEBUG LAB4]: 	IF	if15
-[DEBUG LAB4]: 	LPAREN	(15
-_testid[DEBUG LAB4]: 	ASSIGN	=15
-[DEBUG LAB4]: 	ASSIGN	=15
-0[DEBUG LAB4]: 	RPAREN	)15
-[DEBUG LAB4]: 	LBRACE	{15
-[DEBUG LAB4]: 	INT	int16
-_testid[DEBUG LAB4]: 	SEMICOLON	;16
-[DEBUG LAB4]: 	INT	int17
-_testid2[DEBUG LAB4]: 	SEMICOLON	;17
-_testid1[DEBUG LAB4]: 	ASSIGN	=18
-_testid1[DEBUG LAB4]: 	ADD	+18
-1[DEBUG LAB4]: 	SEMICOLON	;18
-[DEBUG LAB4]: 	RBRACE	}19
-[DEBUG LAB4]: 	RBRACE	}20
-Commentlines[DEBUG LAB4]: 	SEMICOLON	;21
-*/[DEBUG LAB4]: 	LBRACE	{23
-[DEBUG LAB4]: 	INT	int24
-a[DEBUG LAB4]: 	SEMICOLON	;24
-[DEBUG LAB4]: 	RBRACE	}25
-[DEBUG LAB4]: 	LBRACE	{26
-[DEBUG LAB4]: 	INT	int27
-a[DEBUG LAB4]: 	SEMICOLON	;27
-[DEBUG LAB4]: 	RBRACE	}28
-[DEBUG LAB4]: 	INT	int29
-b[DEBUG LAB4]: 	SEMICOLON	;29
-[DEBUG LAB4]: 	RETURN	return30
-0[DEBUG LAB4]: 	SEMICOLON	;30
-[DEBUG LAB4]: 	RBRACE	}31
-[DEBUG LAB4]: 	RBRACE	}33
-Commentlines.*/
+token     lexeme    lineno    offset    attribute
+INT       int       3         0         
+ID        f         3         3         0x55c5a47160a0
+LPAREN    (         3         4         
+RPAREN    )         3         5         
+LBRACE    {         3         6         
+INT       int       4         0         
+ID        a         4         3         0x55c5a4716104
+SEMI      ;         4         4         
+ID        a         5         0         0x55c5a4716104
+ASSIGN    =         5         1         
+NUMBER    0x1A      5         2         26        
+SEMI      ;         5         6         
+WHILE     while     6         0         
+LPAREN    (         6         5         
+ID        a         6         6         0x55c5a4716104
+LESS      <         6         7         
+NUMBER    10        6         8         10        
+RPAREN    )         6         10        
+LBRACE    {         6         11        
+ID        a         7         0         0x55c5a4716168
+ASSIGN    =         7         1         
+ID        a         7         2         0x55c5a4716168
+MULT      *         7         3         
+NUMBER    2345      7         4         2345      
+SEMI      ;         7         8         
+RBRACE    }         8         0         
+RETURN    return    9         0         
+ID        a         9         6         0x55c5a47161cc
+SEMI      ;         9         7         
+RBRACE    }         10        0         
+INT       int       12        0         
+MAIN      main      12        3         
+LPAREN    (         12        7         
+RPAREN    )         12        8         
+LBRACE    {         12        9         
+INT       int       13        0         
+ID        _testid   13        3         0x55c5a4716230
+SEMI      ;         13        10        
+ID        _testid   14        0         0x55c5a4716230
+ASSIGN    =         14        7         
+NUMBER    0         14        8         0         
+SEMI      ;         14        9         
+IF        if        15        0         
+LPAREN    (         15        2         
+ID        _testid   15        3         0x55c5a4716230
+ASSIGN    =         15        10        
+ASSIGN    =         15        11        
+NUMBER    0         15        12        0         
+RPAREN    )         15        13        
+LBRACE    {         15        14        
+INT       int       16        0         
+ID        _testid   16        3         0x55c5a4716294
+SEMI      ;         16        10        
+INT       int       17        0         
+ID        _testid2  17        3         0x55c5a47162f8
+SEMI      ;         17        11        
+ID        _testid1  18        0         0x55c5a471635c
+ASSIGN    =         18        8         
+ID        _testid1  18        9         0x55c5a471635c
+PLUS      +         18        17        
+NUMBER    1         18        18        1         
+SEMI      ;         18        19        
+RBRACE    }         19        0         
+LBRACE    {         23        0         
+INT       int       24        0         
+ID        a         24        3         0x55c5a47163c0
+SEMI      ;         24        4         
+RBRACE    }         25        0         
+LBRACE    {         26        0         
+INT       int       27        0         
+ID        a         27        3         0x55c5a4716424
+SEMI      ;         27        4         
+RBRACE    }         28        0         
+INT       int       29        0         
+ID        b         29        3         0x55c5a4716488
+SEMI      ;         29        4         
+RETURN    return    30        0         
+NUMBER    0         30        6         0         
+SEMI      ;         30        7         
+RBRACE    }         31        0         

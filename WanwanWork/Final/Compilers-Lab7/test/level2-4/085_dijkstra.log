@@ -1,0 +1,8 @@
+test/level2-4/085_dijkstra.s: Assembler messages:
+test/level2-4/085_dijkstra.s:374: 错误： shift expression expected -- `add r4,r5,v17'
+test/level2-4/085_dijkstra.s:606: 错误： shift expression expected -- `add r5,r4,v60'
+test/level2-4/085_dijkstra.s:670: 错误： shift expression expected -- `add r5,r7,v69'
+test/level2-4/085_dijkstra.s:746: 错误： shift expression expected -- `add r5,r6,v78'
+test/level2-4/085_dijkstra.s:872: 错误： shift expression expected -- `add r5,r4,v104'
+test/level2-4/085_dijkstra.s:902: 错误： shift expression expected -- `add r5,r6,v107'
+test/level2-4/085_dijkstra.s:982: 错误： shift expression expected -- `add r4,r5,v125'

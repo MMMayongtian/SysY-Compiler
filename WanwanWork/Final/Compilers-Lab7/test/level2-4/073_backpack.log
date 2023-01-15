@@ -1,0 +1,10 @@
+test/level2-4/073_backpack.s: Assembler messages:
+test/level2-4/073_backpack.s:40299: 错误： shift expression expected -- `add r4,r5,v31'
+test/level2-4/073_backpack.s:40513: 错误： shift expression expected -- `add r5,r6,v27'
+test/level2-4/073_backpack.s:40731: 错误： shift expression expected -- `add r4,r5,v35'
+test/level2-4/073_backpack.s:40948: 错误： shift expression expected -- `add r4,r5,v43'
+test/level2-4/073_backpack.s:41196: 错误： shift expression expected -- `add r4,r6,v53'
+test/level2-4/073_backpack.s:41413: 错误： shift expression expected -- `add r4,r5,v57'
+test/level2-4/073_backpack.s:41649: 错误： shift expression expected -- `add r5,r4,v73'
+test/level2-4/073_backpack.s:41865: 错误： shift expression expected -- `add r6,r5,v77'
+test/level2-4/073_backpack.s:42085: 错误： shift expression expected -- `add r5,r4,v93'

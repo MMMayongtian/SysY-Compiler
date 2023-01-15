@@ -1,8 +1,8 @@
 // i am a function: this function has many syntax errors.
 
-int f(){
+int	f(){
 	int a;
-	a = 0;
+	a = 0x1A;
 	while(a<10){
 		a = a * 2345;
 	}
@@ -21,7 +21,7 @@ int main(){
 		Comment lines;
 	*/
 	{
-		int                a;
+		int a;
 	}
 	{
 		int a;

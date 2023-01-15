@@ -1,0 +1,7 @@
+test/level2-4/070_multiplication_puzzle.s: Assembler messages:
+test/level2-4/070_multiplication_puzzle.s:156: 错误： shift expression expected -- `add r4,r5,v73'
+test/level2-4/070_multiplication_puzzle.s:237: 错误： shift expression expected -- `add r5,r4,v33'
+test/level2-4/070_multiplication_puzzle.s:256: 错误： shift expression expected -- `add r5,r6,v36'
+test/level2-4/070_multiplication_puzzle.s:304: 错误： shift expression expected -- `add r5,r4,v49'
+test/level2-4/070_multiplication_puzzle.s:359: 错误： shift expression expected -- `add r4,r6,v60'
+test/level2-4/070_multiplication_puzzle.s:386: 错误： shift expression expected -- `add r4,r6,v54'
