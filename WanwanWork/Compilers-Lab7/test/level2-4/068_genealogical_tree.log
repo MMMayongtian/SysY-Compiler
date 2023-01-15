@@ -1,3 +1,0 @@
-test/level2-4/068_genealogical_tree.s: Assembler messages:
-test/level2-4/068_genealogical_tree.s:283: 错误： shift expression expected -- `add r5,r4,v40'
-test/level2-4/068_genealogical_tree.s:459: 错误： shift expression expected -- `add r5,r4,v75'

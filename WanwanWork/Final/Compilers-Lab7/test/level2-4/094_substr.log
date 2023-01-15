@@ -1,7 +1,0 @@
-test/level2-4/094_substr.s: Assembler messages:
-test/level2-4/094_substr.s:1110: 错误： shift expression expected -- `add r5,r4,v100'
-test/level2-4/094_substr.s:1208: 错误： shift expression expected -- `add r4,r5,v78'
-test/level2-4/094_substr.s:1235: 错误： shift expression expected -- `add r5,r6,v73'
-test/level2-4/094_substr.s:1268: 错误： shift expression expected -- `add r4,r5,v86'
-test/level2-4/094_substr.s:1294: 错误： shift expression expected -- `add r5,r6,v90'
-test/level2-4/094_substr.s:1324: 错误： shift expression expected -- `add r4,r5,v82'

@@ -1,2 +1,0 @@
-test/level2-4/086_full_conn.s: Assembler messages:
-test/level2-4/086_full_conn.s:4182: 错误： shift expression expected -- `add r4,r7,v918'

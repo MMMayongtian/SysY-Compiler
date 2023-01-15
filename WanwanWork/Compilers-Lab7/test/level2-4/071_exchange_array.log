@@ -1,5 +1,0 @@
-test/level2-4/071_exchange_array.s: Assembler messages:
-test/level2-4/071_exchange_array.s:118: 错误： shift expression expected -- `add r4,r6,v13'
-test/level2-4/071_exchange_array.s:136: 错误： shift expression expected -- `add r4,r6,v21'
-test/level2-4/071_exchange_array.s:153: 错误： shift expression expected -- `add r5,r7,v17'
-test/level2-4/071_exchange_array.s:171: 错误： shift expression expected -- `add r4,r6,v25'
