@@ -284,7 +284,7 @@ commentend "*/"
         }
         DEBUG_FOR_LAB4("ID",pointer);
     #else
-        return RPAREN;
+        return ID;
     #endif
 }
 {DECI} {

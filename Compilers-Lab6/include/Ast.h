@@ -101,6 +101,16 @@ public:
     bool typeCheck(Type* retType);
     void genCode();
     ExprNode* getNextParams(){return params;};
+    int getKind(){return 0;
+    //check
+    SymbolEntry * se = param->getSymPtr();
+    Type* t = se->getType();
+    return t->getKind();
+
+    };
+    int getParamKind(){return 0;
+        
+    }
     void getOperands(std::vector<Operand*> &operands);
 };
 

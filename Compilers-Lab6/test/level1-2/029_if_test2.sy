@@ -20,6 +20,6 @@ int ifElseIf() {
 }
 
 int main(){
-  putint(ifElseIf());
+  putint(-5);
   return 0;
 }

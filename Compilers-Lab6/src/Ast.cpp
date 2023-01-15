@@ -37,20 +37,51 @@ CallExpr::CallExpr(SymbolEntry *se, SymbolEntry *t, ExprNode *params) : ExprNode
 {
     dst = nullptr;
     int paramCnt = 0;
+    FunctionType *functype = (FunctionType *)t->getType();
+    std::vector<Type *> paramsType = functype->getParamsType();
     FuncRParams *temp = (FuncRParams *)params;
+
     while (temp)
     {
+        if(paramsType[paramCnt]->getKind()!=temp->getKind()){
+            fprintf(stderr,"Function parameter types do not match.\n");
+        }
         paramCnt++;
         temp = (FuncRParams *)temp->getNextParams();
     }
-    FunctionType *functype = (FunctionType *)t->getType();
-    std::vector<Type *> paramsType = functype->getParamsType();
+
+
     if (paramCnt != paramsType.size())
     {
-        fprintf(stderr, "function defined with %d params, but expected %d params.\n", paramCnt, paramsType.size());
-    }
+        if(paramsType.size()  == 0){
+            fprintf(stderr, "function defined with no params,");
+        }
+        else if(paramsType.size() ==1)
+            fprintf(stderr, "function defined with param: \"i32,");
+        else {
+            fprintf(stderr, "function defined with param: \"");
+            for(int i=0;i<paramsType.size() -1;i++){
+                fprintf(stderr, "i32,");
+            }
+            fprintf(stderr, "i32\"");
+        }
+        
+        if(paramCnt == 0){
+            fprintf(stderr, ", but expected no params.\n");
+        }
+        else if(paramCnt==1)
+            fprintf(stderr, ", but expected param: \"i32.\"\n");
+        else {
+            fprintf(stderr, ", but expected params: ");
+            for(int i=0;i<paramCnt-1;i++){
+                fprintf(stderr, "\"i32,\"");
+            }
+            fprintf(stderr, "\"i32\".\n");
+        }
 
+    }
     dst = new Operand(se);
+
 }
 
 void Node::backPatch(std::vector<BasicBlock **> &list, BasicBlock *target)
@@ -93,8 +124,8 @@ void FunctionDef::genCode()
     {
         Instruction *inst = bb->rbegin();
         if (inst->isCond())
-        {
-            CondBrInstruction *br;
+        {//条件跳转指令 两个后继节点 真和假
+            
             BasicBlock *succ1, *succ2;
             br = dynamic_cast<CondBrInstruction *>(inst);
             succ1 = br->getTrueBranch();
@@ -105,7 +136,7 @@ void FunctionDef::genCode()
             succ2->addPred(bb);
         }
         else if (inst->isUncond())
-        {
+        {//非条件跳转指令 一个后继节点
             UncondBrInstruction *br;
             BasicBlock *succ;
             br = dynamic_cast<UncondBrInstruction *>(inst);
@@ -114,7 +145,8 @@ void FunctionDef::genCode()
             bb->addSucc(succ);
             succ->addPred(bb);
         }
-        else if (this->voidRet)
+        //非条件跳转指令 只能为函数返回指令 
+        else if (this->voidRet)//判断是否需要添加return void
         {
             new RetInstruction(nullptr,bb);
         }
@@ -124,6 +156,7 @@ void FunctionDef::genCode()
 
 void BinaryExpr::genCode()
 {
+    //得到后续生成的指令要插入的基本快bb
     BasicBlock *bb = builder->getInsertBB();
     Function *func = bb->getParent();
     if (op == AND)
@@ -466,7 +499,7 @@ bool WhileStmt::typeCheck(Type *retType)
     Type *type = cond->getSymPtr()->getType();
     if (!type->isI1())
     {
-        //fprintf(stderr, "Implicit conversion in whileStmt: \"int\" to \"bool\"\n");
+        fprintf(stderr, "Implicit conversion in whileStmt: \"int\" to \"bool\"\n");
         SymbolEntry *se = new ConstantSymbolEntry(type, 0);
         Constant *zero = new Constant(se);
         cond = new BinaryExpr(new TemporarySymbolEntry(IntType::get(1), SymbolTable::getLabel()), BinaryExpr::NE, cond, zero);
@@ -720,12 +753,14 @@ bool BinaryExpr::typeCheck(Type *retType)
     {
         if (!type1->isI1())
         {
+            fprintf(stderr, "Implicit conversion in logical operation: \"int\" to \"bool\"\n");
             SymbolEntry *se = new ConstantSymbolEntry(type1, 0);
             Constant *zero = new Constant(se);
             expr1 = new BinaryExpr(new TemporarySymbolEntry(IntType::get(1), SymbolTable::getLabel()), BinaryExpr::NE, expr1, zero);
         }
         if (!type2->isI1())
         {
+            fprintf(stderr, "Implicit conversion in logical operation: \"int\" to \"bool\"\n");
             SymbolEntry *se = new ConstantSymbolEntry(type2, 0);
             Constant *zero = new Constant(se);
             expr2 = new BinaryExpr(new TemporarySymbolEntry(IntType::get(1), SymbolTable::getLabel()), BinaryExpr::NE, expr2, zero);
@@ -791,7 +826,7 @@ bool IfStmt::typeCheck(Type *retType)
     Type *type = cond->getSymPtr()->getType();
     if (!type->isI1())
     {
-        // fprintf(stderr, "Implicit conversion in ifStmt: \"int\" to \"bool\"\n");
+        fprintf(stderr, "Implicit conversion in ifStmt: \"int\" to \"bool\"\n");
         SymbolEntry *se = new ConstantSymbolEntry(type, 0);
         Constant *zero = new Constant(se);
         cond = new BinaryExpr(new TemporarySymbolEntry(IntType::get(1), SymbolTable::getLabel()), BinaryExpr::NE, cond, zero);
@@ -809,7 +844,7 @@ bool IfElseStmt::typeCheck(Type *retType)
     Type *type = cond->getSymPtr()->getType();
     if (!type->isI1())
     {
-        // fprintf(stderr, "Implicit conversion in ifStmt: \"int\" to \"bool\"\n");
+        fprintf(stderr, "Implicit conversion in ifStmt: \"int\" to \"bool\"\n");
         SymbolEntry *se = new ConstantSymbolEntry(type, 0);
         Constant *zero = new Constant(se);
         cond = new BinaryExpr(new TemporarySymbolEntry(IntType::get(1), SymbolTable::getLabel()), BinaryExpr::NE, cond, zero);
